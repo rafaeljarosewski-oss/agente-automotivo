@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050a18">
+<link rel="canonical" href="https://rafaeljarosewski-oss.github.io/agente-automotivo/">
+<meta name="description" content="Agente de atendimento no WhatsApp que reconhece o porte do carro pela foto, entende audio e marca o horario na Google Agenda.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Órion Automação">
+<meta property="og:title" content="Um atendente que nunca fecha">
+<meta property="og:description" content="Reconhece o porte do carro pela foto, entende áudio e marca o horário sozinho.">
+<meta property="og:url" content="https://rafaeljarosewski-oss.github.io/agente-automotivo/">
+<meta property="og:image" content="https://rafaeljarosewski-oss.github.io/agente-automotivo/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rafaeljarosewski-oss.github.io/agente-automotivo/og.png">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Proposta Cliente Fundador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    --ground:#050a18;
+    --surface:#0a1730;
+    --surface-2:#0d1b36;
+    --raised:#16264d;
+    --line:rgba(148,163,184,.14);
+    --line-strong:rgba(148,163,184,.26);
+    --ink:#f1f5f9;
+    --ink-mid:#cbd5e1;
+    --ink-dim:#94a3b8;
+    --ink-faint:#64748b;
+    --accent:#2f7df6;
+    --accent-soft:#7dd3fc;
+    --seal:#f2b13c;
+    --seal-dim:rgba(242,177,60,.14);
+    --wa-in:#1f2c34;
+    --wa-out:#075e54;
+    --wa-out-bg:#0b5c50;
+    --f-display:'Sora',ui-sans-serif,system-ui,sans-serif;
+    --f-body:'Inter',ui-sans-serif,system-ui,sans-serif;
+    --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+    --col:min(760px,100%);
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    width:var(--col);
+    margin:0 auto;
+    padding:0 22px 72px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+
+  /* ---------- topo ---------- */
+  .top{
+    position:relative;
+    padding:44px 0 34px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .top::before{
+    content:"";
+    position:absolute;
+    inset:-60px -50vw 0;
+    background:
+      radial-gradient(ellipse 46% 62% at 50% 0%, rgba(47,125,246,.20), transparent 72%),
+      linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px) 0 0/44px 44px,
+      linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px) 0 0/44px 44px;
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--f-mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  .brand svg{display:block;flex:none}
+
+  h1{
+    font-family:var(--f-display);
+    font-weight:700;
+    font-size:clamp(30px,7vw,44px);
+    line-height:1.12;
+    letter-spacing:-.02em;
+    margin:0;
+    text-wrap:balance;
+  }
+  h1 em{font-style:normal;color:var(--accent-soft)}
+
+  .dek{
+    margin:0;
+    max-width:56ch;
+    font-size:clamp(16px,2.4vw,18px);
+    color:var(--ink-mid);
+  }
+
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 28px;
+    padding-top:6px;
+  }
+  .meta div{display:flex;flex-direction:column;gap:2px}
+  .meta dt{
+    font-family:var(--f-mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .meta dd{margin:0;font-size:14px;color:var(--ink-mid);font-weight:500}
+  .fill{color:var(--seal);border-bottom:1px dashed rgba(242,177,60,.5);padding-bottom:1px}
+
+  /* ---------- seções ---------- */
+  section{
+    padding:38px 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .eyebrow{
+    font-family:var(--f-mono);
+    font-size:10.5px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--accent-soft);
+    margin:0;
+  }
+  h2{
+    font-family:var(--f-display);
+    font-weight:600;
+    font-size:clamp(21px,4vw,27px);
+    line-height:1.25;
+    letter-spacing:-.015em;
+    margin:0;
+    text-wrap:balance;
+  }
+  h3{
+    font-family:var(--f-display);
+    font-weight:600;
+    font-size:16px;
+    margin:0;
+    letter-spacing:-.005em;
+  }
+  p{margin:0;max-width:64ch;color:var(--ink-mid)}
+  strong{color:var(--ink);font-weight:600}
+
+  /* ---------- conversa ---------- */
+  .demo{
+    background:linear-gradient(180deg,rgba(13,27,54,.8),rgba(8,18,38,.8));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:16px 14px 18px;
+  }
+  .demo-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 4px 14px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:16px;
+  }
+  .avatar{
+    width:34px;height:34px;flex:none;
+    border-radius:50%;
+    background:linear-gradient(140deg,var(--accent),#153a8a);
+    display:grid;place-items:center;
+    font-family:var(--f-display);
+    font-weight:700;font-size:14px;color:#fff;
+  }
+  .demo-head b{display:block;font-family:var(--f-display);font-size:14px;font-weight:600}
+  .demo-head span{font-size:11.5px;color:#4ade80}
+
+  .thread{display:flex;flex-direction:column;gap:8px}
+  .bubble{
+    max-width:82%;
+    padding:9px 12px 7px;
+    border-radius:14px;
+    font-size:14.5px;
+    line-height:1.5;
+    position:relative;
+    color:var(--ink);
+  }
+  .bubble.in{background:var(--wa-in);border-top-left-radius:4px;align-self:flex-start}
+  .bubble.out{background:var(--wa-out-bg);border-top-right-radius:4px;align-self:flex-end}
+  .t{
+    display:block;
+    font-family:var(--f-mono);
+    font-size:9.5px;
+    color:rgba(241,245,249,.45);
+    text-align:right;
+    margin-top:3px;
+  }
+  .photo{padding:6px 6px 4px}
+  .photo figure{margin:0}
+  .photo svg{display:block;width:100%;height:auto;border-radius:9px;background:#101c2c}
+  .audio{display:flex;align-items:center;gap:9px;padding:11px 12px}
+  .audio .play{
+    width:24px;height:24px;flex:none;border-radius:50%;
+    background:rgba(241,245,249,.16);
+    display:grid;place-items:center;
+  }
+  .audio .wave{display:flex;align-items:center;gap:2.5px;flex:1;height:20px}
+  .audio .wave i{display:block;width:2.5px;border-radius:2px;background:rgba(241,245,249,.5)}
+  .audio time{font-family:var(--f-mono);font-size:10.5px;color:rgba(241,245,249,.55)}
+
+  .caption{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    text-align:center;
+    margin:0 auto;
+    max-width:46ch;
+  }
+
+  /* ---------- listas de capacidade ---------- */
+  .caps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  @media(min-width:620px){.caps{grid-template-columns:1fr 1fr}}
+  .cap{background:var(--surface);padding:16px 17px;display:flex;flex-direction:column;gap:5px}
+  .cap p{font-size:13.5px;line-height:1.55;color:var(--ink-dim)}
+  .cap .tick{color:var(--accent-soft);font-family:var(--f-mono);font-size:12px}
+
+  /* ---------- escala de porte ---------- */
+  .portes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .porte{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 8px 10px;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    text-align:center;
+  }
+  .porte svg{display:block;width:100%;height:auto;max-width:96px}
+  .porte b{font-family:var(--f-mono);font-size:15px;font-weight:600;color:var(--accent-soft)}
+  .porte span{font-size:11px;color:var(--ink-faint);line-height:1.35}
+
+  /* ---------- preço ---------- */
+  .price-card{
+    border:1px solid rgba(242,177,60,.35);
+    border-radius:18px;
+    background:linear-gradient(180deg,rgba(242,177,60,.07),rgba(10,23,48,.6));
+    overflow:hidden;
+  }
+  .seal{
+    display:flex;align-items:center;gap:8px;
+    background:var(--seal-dim);
+    border-bottom:1px solid rgba(242,177,60,.25);
+    padding:9px 18px;
+    font-family:var(--f-mono);
+    font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--seal);
+  }
+  .seal .dot{width:6px;height:6px;border-radius:50%;background:var(--seal);flex:none}
+  .price-rows{display:flex;flex-direction:column}
+  .price-row{
+    display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding:17px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .price-row:last-child{border-bottom:none}
+  .price-row .label{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .price-row .label b{font-family:var(--f-display);font-size:15px;font-weight:600;color:var(--ink)}
+  .price-row .label span{font-size:12.5px;color:var(--ink-faint)}
+  .figures{display:flex;align-items:baseline;gap:12px;flex:none;font-variant-numeric:tabular-nums}
+  .was{font-family:var(--f-mono);font-size:13px;color:var(--ink-faint);text-decoration:line-through;text-decoration-color:rgba(148,163,184,.6)}
+  .now{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,5vw,28px);letter-spacing:-.02em;color:var(--seal)}
+  .now small{font-size:13px;font-weight:500;color:var(--ink-dim);letter-spacing:0}
+  .total-row{background:rgba(5,10,24,.5);padding:15px 18px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+  .total-row span{font-size:13px;color:var(--ink-dim)}
+  .total-row b{font-family:var(--f-mono);font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* ---------- condições ---------- */
+  .conds{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .cond{background:var(--surface);padding:17px 18px;display:flex;gap:14px}
+  .cond .n{
+    flex:none;width:26px;height:26px;border-radius:8px;
+    background:var(--seal-dim);border:1px solid rgba(242,177,60,.3);
+    display:grid;place-items:center;
+    font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--seal);
+  }
+  .cond .body{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .cond p{font-size:13.5px;line-height:1.6;color:var(--ink-dim)}
+
+  /* ---------- passos ---------- */
+  ol.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0}
+  ol.steps li{
+    display:grid;grid-template-columns:auto 1fr;gap:0 16px;
+    padding-bottom:20px;
+  }
+  ol.steps li:last-child{padding-bottom:0}
+  .step-n{
+    grid-row:1/3;
+    width:28px;height:28px;border-radius:50%;
+    border:1px solid var(--line-strong);
+    background:var(--surface-2);
+    display:grid;place-items:center;
+    font-family:var(--f-mono);font-size:12px;color:var(--accent-soft);
+    position:relative;
+  }
+  ol.steps li:not(:last-child) .step-n::after{
+    content:"";position:absolute;top:31px;left:50%;transform:translateX(-50%);
+    width:1px;height:calc(100% + 22px);background:var(--line);
+  }
+  .step-n span{line-height:1}
+  ol.steps h3{align-self:center}
+  ol.steps p{grid-column:2;font-size:13.5px;margin-top:4px}
+
+  /* ---------- escopo ---------- */
+  .scope{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px dashed var(--line-strong);border-radius:14px;background:rgba(10,23,48,.4)}
+  .scope ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+  .scope li{font-size:13.5px;color:var(--ink-dim);line-height:1.55}
+  .scope li::marker{color:var(--ink-faint)}
+
+  /* ---------- fechamento ---------- */
+  .close{
+    border-top:1px solid var(--line);
+    padding:38px 0 0;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .cta{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    align-self:flex-start;
+    background:var(--accent);
+    color:#fff;
+    font-family:var(--f-display);
+    font-weight:600;font-size:15px;
+    padding:14px 24px;
+    border-radius:12px;
+    text-decoration:none;
+    border:1px solid rgba(125,211,252,.4);
+    transition:background .18s ease,transform .18s ease;
+  }
+  .cta:hover{background:#4b91ff;transform:translateY(-1px)}
+  .cta:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
+  .sign{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--ink-faint)}
+  .sign b{font-family:var(--f-display);font-size:14px;color:var(--ink-mid);font-weight:600}
+
+  @media print{
+    @page{size:A4;margin:14mm 0}
+    html,body,*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+    body{background:var(--ground)}
+    .page{width:100%;padding:0 16mm 0}
+    .top{padding-top:6px}
+    .top::before{inset:-14px 0 0}
+    section{break-inside:auto;padding:26px 0}
+    .demo,.price-card,.conds,.caps,.scope,.portes,ol.steps li,.cond,.cap{break-inside:avoid}
+    h1,h2,h3{break-after:avoid}
+    .close{break-inside:avoid;padding-top:26px}
+    .cta{border:1px solid rgba(125,211,252,.5)}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="top">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <circle cx="4" cy="13.5" r="2" fill="#7dd3fc"></circle>
+        <circle cx="9" cy="9" r="2.4" fill="#2f7df6"></circle>
+        <circle cx="14" cy="4.5" r="2" fill="#7dd3fc"></circle>
+        <path d="M4 13.5 L9 9 L14 4.5" stroke="rgba(148,163,184,.5)" stroke-width="1" fill="none"></path>
+      </svg>
+      Órion Automação · Proposta comercial
+    </div>
+
+    <h1>Um atendente que <em>nunca fecha</em>, responde áudio e já sabe o porte do carro pela foto.</h1>
+
+    <p class="dek">Agente de atendimento no WhatsApp que conversa como gente, reconhece o tamanho do veículo por imagem, passa o orçamento certo e deixa o horário marcado direto na sua Google Agenda. Sem app novo, sem plantão, sem cliente esperando resposta.</p>
+
+  </header>
+
+  <section>
+    <p class="eyebrow">Como funciona na prática</p>
+    <h2>A conversa que ele resolve sozinho, às 21h de um domingo</h2>
+
+    <div class="demo">
+      <div class="demo-head">
+        <div class="avatar" aria-hidden="true">O</div>
+        <div>
+          <b>Atendimento automático</b>
+          <span>online</span>
+        </div>
+      </div>
+
+      <div class="thread">
+        <div class="bubble in">Boa noite, vocês fazem higienização interna? Quanto fica?<span class="t">21:04</span></div>
+
+        <div class="bubble out">Boa noite! Fazemos sim. O valor muda conforme o porte do carro, então me manda uma foto dele que eu já te passo o preço certinho.<span class="t">21:04</span></div>
+
+        <div class="bubble in photo">
+          <figure>
+            <svg viewBox="0 0 260 130" role="img" aria-label="Foto de uma SUV média enviada pelo cliente">
+              <rect x="0" y="0" width="260" height="130" fill="#101c2c"></rect>
+              <rect x="0" y="96" width="260" height="34" fill="#16212f"></rect>
+              <path d="M28 92 L34 66 Q37 56 50 54 L92 48 Q108 45 122 52 L156 68 L214 74 Q230 76 232 88 L232 96 L28 96 Z" fill="#3f6ea8"></path>
+              <path d="M52 62 L88 57 L92 70 L54 72 Z" fill="#9fc6ec"></path>
+              <path d="M99 57 Q112 55 120 60 L146 70 L100 71 Z" fill="#9fc6ec"></path>
+              <circle cx="74" cy="96" r="17" fill="#0d141d"></circle>
+              <circle cx="74" cy="96" r="7" fill="#4b5a6b"></circle>
+              <circle cx="196" cy="96" r="17" fill="#0d141d"></circle>
+              <circle cx="196" cy="96" r="7" fill="#4b5a6b"></circle>
+              <rect x="226" y="76" width="8" height="6" rx="2" fill="#f0d9a0"></rect>
+            </svg>
+          </figure>
+          <span class="t">21:05</span>
+        </div>
+
+        <div class="bubble out">Pela foto é uma SUV média, porte <b>G</b>. A higienização interna completa fica <b>R$ 280</b> e leva cerca de 3 horas. O valor é confirmado na chegada, quando a equipe vê o carro de perto.<span class="t">21:05</span></div>
+
+        <div class="bubble out">Tenho quinta às 09h ou sexta às 14h. Qual fica melhor pra você?<span class="t">21:05</span></div>
+
+        <div class="bubble in audio">
+          <span class="play" aria-hidden="true">
+            <svg width="9" height="10" viewBox="0 0 9 10"><path d="M0 0 L9 5 L0 10 Z" fill="rgba(241,245,249,.8)"></path></svg>
+          </span>
+          <span class="wave" aria-hidden="true">
+            <i style="height:6px"></i><i style="height:12px"></i><i style="height:18px"></i><i style="height:9px"></i><i style="height:15px"></i><i style="height:20px"></i><i style="height:11px"></i><i style="height:7px"></i><i style="height:14px"></i><i style="height:18px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:13px"></i><i style="height:16px"></i><i style="height:8px"></i><i style="height:11px"></i><i style="height:5px"></i>
+          </span>
+          <time>0:07</time>
+          <span class="t" style="position:absolute;right:12px;bottom:1px">21:06</span>
+        </div>
+
+        <div class="bubble out">Fechado, quinta às 09h. Já reservei na agenda e te mando um lembrete na quarta. Qual o nome pra eu anotar?<span class="t">21:06</span></div>
+
+        <div class="bubble in">Marcos, valeu!<span class="t">21:07</span></div>
+      </div>
+    </div>
+
+    <p class="caption">O áudio do cliente dizia "pode ser quinta de manhã mesmo". O agente entendeu, marcou e confirmou sozinho.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">O diferencial</p>
+    <h2>Ele lê a foto e classifica o porte antes de falar preço</h2>
+    <p>É aqui que a maioria dos atendimentos trava. O cliente pergunta o valor, o atendente precisa saber qual carro é, e a conversa morre no vai e volta. O agente resolve isso na primeira mensagem, olhando a foto e encaixando o veículo na sua própria tabela de portes.</p>
+
+    <div class="portes">
+      <div class="porte">
+        <svg viewBox="0 0 110 52" aria-hidden="true">
+          <path d="M16 40 L20 26 Q22 20 32 19 L58 17 Q66 17 72 21 L86 30 L94 32 Q99 33 99 38 L99 42 L16 42 Z" fill="#33517d"></path>
+          <circle cx="36" cy="42" r="8" fill="#0d141d"></circle><circle cx="36" cy="42" r="3" fill="#4b5a6b"></circle>
+          <circle cx="84" cy="42" r="8" fill="#0d141d"></circle><circle cx="84" cy="42" r="3" fill="#4b5a6b"></circle>
+        </svg>
+        <b>P</b><span>Hatch<br>compacto</span>
+      </div>
+      <div class="porte">
+        <svg viewBox="0 0 110 52" aria-hidden="true">
+          <path d="M10 40 L15 25 Q17 19 28 18 L56 15 Q66 15 73 20 L92 31 L98 33 Q104 34 104 39 L104 42 L10 42 Z" fill="#3a5d90"></path>
+          <circle cx="32" cy="42" r="8.5" fill="#0d141d"></circle><circle cx="32" cy="42" r="3.2" fill="#4b5a6b"></circle>
+          <circle cx="86" cy="42" r="8.5" fill="#0d141d"></circle><circle cx="86" cy="42" r="3.2" fill="#4b5a6b"></circle>
+        </svg>
+        <b>M</b><span>Sedan<br>médio</span>
+      </div>
+      <div class="porte">
+        <svg viewBox="0 0 110 52" aria-hidden="true">
+          <path d="M8 39 L12 20 Q14 13 26 12 L62 10 Q73 10 80 16 L96 28 Q104 30 104 37 L104 42 L8 42 Z" fill="#3f6ea8"></path>
+          <circle cx="31" cy="42" r="9.5" fill="#0d141d"></circle><circle cx="31" cy="42" r="3.6" fill="#4b5a6b"></circle>
+          <circle cx="86" cy="42" r="9.5" fill="#0d141d"></circle><circle cx="86" cy="42" r="3.6" fill="#4b5a6b"></circle>
+        </svg>
+        <b>G</b><span>SUV<br>e minivan</span>
+      </div>
+      <div class="porte">
+        <svg viewBox="0 0 110 52" aria-hidden="true">
+          <path d="M5 38 L9 15 Q11 8 24 8 L54 8 Q62 8 64 15 L64 27 L98 27 Q106 28 106 36 L106 42 L5 42 Z" fill="#4a7fbe"></path>
+          <circle cx="28" cy="42" r="10" fill="#0d141d"></circle><circle cx="28" cy="42" r="3.8" fill="#4b5a6b"></circle>
+          <circle cx="88" cy="42" r="10" fill="#0d141d"></circle><circle cx="88" cy="42" r="3.8" fill="#4b5a6b"></circle>
+        </svg>
+        <b>GG</b><span>Picape<br>e utilitário</span>
+      </div>
+    </div>
+
+    <p class="caption">Os portes e os preços de cada faixa são os seus. Eu treino o agente com a sua tabela, do seu jeito.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Escopo</p>
+    <h2>O que o agente faz todos os dias</h2>
+
+    <div class="caps">
+      <div class="cap"><span class="tick">✓</span><h3>Responde 24 horas</h3><p>Domingo à noite, feriado, hora do almoço. Nenhuma mensagem fica sem resposta esperando você abrir o celular.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Entende áudio</h3><p>O cliente manda áudio, que é como a maioria realmente fala no WhatsApp, e o agente responde normalmente.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Reconhece o porte por foto</h3><p>Classifica o veículo em P, M, G ou GG e aplica a faixa de preço correspondente da sua tabela.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Marca na Google Agenda</h3><p>Consulta os horários livres, reserva o encaixe considerando a duração do serviço e confirma com o cliente.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Lembra o cliente</h3><p>Aviso automático 24 horas antes, com opção de confirmar, remarcar ou cancelar pela mesma conversa.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Resgata quem sumiu</h3><p>Se a pessoa perguntou o preço e não respondeu mais, ele volta no dia seguinte com uma mensagem curta.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Passa pra você quando precisa</h3><p>Reclamação, caso fora do padrão ou pedido de desconto vão direto pro seu celular, com o resumo da conversa.</p></div>
+      <div class="cap"><span class="tick">✓</span><h3>Relatório mensal</h3><p>Quantos atendimentos, quantos viraram agendamento e quais horários mais enchem. Números pra decidir, não achismo.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Investimento</p>
+    <h2>Condição de Cliente Fundador</h2>
+    <p>Você é o primeiro negócio do ramo automotivo que a Órion atende com esse agente. Eu quero o caso montado e documentado mais do que quero a margem, então o preço abaixo não é o de tabela e não vai se repetir depois que a vaga de fundador for preenchida.</p>
+
+    <div class="price-card">
+      <div class="seal"><span class="dot"></span>Vaga de fundador · 2 disponíveis · válida até 08/10/2026</div>
+
+      <div class="price-rows">
+        <div class="price-row">
+          <div class="label"><b>Implantação</b><span>Pagamento único, na assinatura</span></div>
+          <div class="figures"><span class="was">R$ 3.900</span><span class="now">R$ 500</span></div>
+        </div>
+        <div class="price-row">
+          <div class="label"><b>Mensalidade</b><span>Travada por 12 meses, inclui 400 conversas</span></div>
+          <div class="figures"><span class="was">R$ 897</span><span class="now">R$ 400<small>/mês</small></span></div>
+        </div>
+      </div>
+
+      <div class="total-row">
+        <span>Total nos 12 primeiros meses</span>
+        <b>R$ 5.300 &nbsp;·&nbsp; economia de R$ 9.364</b>
+      </div>
+    </div>
+
+    <p style="font-size:13.5px;color:var(--ink-faint)">A implantação pode ser parcelada em 2x de R$ 250 no Pix. Conversas acima de 400 no mês custam R$ 1,50 cada, cobradas só se acontecerem.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Contrapartida</p>
+    <h2>O que eu preciso de você em troca desse preço</h2>
+    <p>Esse valor não é desconto, é troca. Você paga uma parte em dinheiro e a outra parte em prova, que é o que me permite vender pelo preço cheio pro próximo. Todas as condições abaixo entram no contrato.</p>
+
+    <div class="conds">
+      <div class="cond">
+        <span class="n">1</span>
+        <div class="body">
+          <h3>Depoimento em vídeo</h3>
+          <p>Um vídeo de até 2 minutos, gravado no seu celular mesmo, depois de 45 dias de uso. Eu envio as perguntas prontas e você só responde falando. Precisa aparecer o rosto, o nome, o negócio e o resultado real que você teve.</p>
+        </div>
+      </div>
+      <div class="cond">
+        <span class="n">2</span>
+        <div class="body">
+          <h3>Autorização de uso da imagem e do caso</h3>
+          <p>Liberação pra Órion usar o vídeo, o nome, a logo e as fotos do seu negócio em site, redes sociais, propostas e anúncios pagos, por prazo indeterminado e sem custo adicional pra nenhuma das partes.</p>
+        </div>
+      </div>
+      <div class="cond">
+        <span class="n">3</span>
+        <div class="body">
+          <h3>Números reais liberados</h3>
+          <p>Autorização pra divulgar os números do agente no seu negócio: atendimentos respondidos, agendamentos gerados e percentual de conversão. Faturamento só entra se você quiser.</p>
+        </div>
+      </div>
+      <div class="cond">
+        <span class="n">4</span>
+        <div class="body">
+          <h3>Divulgação da Órion no seu canal</h3>
+          <p>Uma publicação no feed e um story no Instagram do negócio contando que o atendimento é feito pela Órion, com marcação do perfil, nos primeiros 60 dias. Eu entrego a arte e o texto prontos, você só publica.</p>
+        </div>
+      </div>
+      <div class="cond">
+        <span class="n">5</span>
+        <div class="body">
+          <h3>Selo no ponto de venda</h3>
+          <p>Um adesivo discreto "Atendimento por Órion Automação" na vitrine ou no balcão, fornecido por mim, mantido enquanto durar o contrato.</p>
+        </div>
+      </div>
+      <div class="cond">
+        <span class="n">6</span>
+        <div class="body">
+          <h3>Duas indicações</h3>
+          <p>Apresentação de dois donos de negócio do mesmo ramo, feita por você no WhatsApp, até o terceiro mês. Sem obrigação nenhuma de eles fecharem.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:13.5px;color:var(--ink-faint)">Se qualquer uma dessas condições não for cumprida em até 90 dias, a mensalidade passa automaticamente para R$ 897, que é o valor de tabela.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Implantação</p>
+    <h2>Do aceite ao agente no ar em 10 dias úteis</h2>
+
+    <ol class="steps">
+      <li>
+        <span class="step-n"><span>1</span></span>
+        <h3>Reunião de levantamento</h3>
+        <p>Uma hora, presencial ou por chamada. Eu mapeio seus serviços, a tabela de portes, os preços, os horários, a duração de cada serviço e as perguntas que mais chegam.</p>
+      </li>
+      <li>
+        <span class="step-n"><span>2</span></span>
+        <h3>Treino do agente</h3>
+        <p>Monto o cérebro dele com as suas informações e o seu jeito de falar. Se você trata cliente por "você", ele trata por "você". Se manda áudio, ele entende áudio.</p>
+      </li>
+      <li>
+        <span class="step-n"><span>3</span></span>
+        <h3>Calibragem com fotos reais</h3>
+        <p>Você me manda fotos de carros que já passaram no seu pátio e eu ajusto a classificação de porte até bater com o que a sua equipe classificaria na mão.</p>
+      </li>
+      <li>
+        <span class="step-n"><span>4</span></span>
+        <h3>Testes com você junto</h3>
+        <p>Você conversa com o agente como se fosse cliente, aponta o que soou estranho e eu corrijo antes de qualquer pessoa de fora falar com ele.</p>
+      </li>
+      <li>
+        <span class="step-n"><span>5</span></span>
+        <h3>Entrada no ar e 30 dias de ajuste</h3>
+        <p>O agente assume o WhatsApp e eu acompanho as conversas de perto no primeiro mês, ajustando sem custo tudo o que aparecer.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="eyebrow">Regras do jogo</p>
+    <h2>O que está e o que não está incluído</h2>
+
+    <div class="scope">
+      <ul>
+        <li><strong>Alterações de fluxo:</strong> 2 por mês inclusas. Mudanças além disso custam R$ 250 cada e são combinadas antes.</li>
+        <li><strong>Conversas:</strong> 400 por mês. O que passar disso sai a R$ 1,50 por conversa, com aviso antes de virar cobrança.</li>
+        <li><strong>Número do WhatsApp:</strong> usamos a API oficial da Meta, que protege seu número de bloqueio. O consumo de mensagens da Meta é repassado pelo custo, hoje algo entre R$ 20 e R$ 50 por mês num volume como o seu.</li>
+        <li><strong>Classificação de porte:</strong> é uma estimativa assistida por imagem, com precisão alta mas não absoluta. O agente sempre informa que o valor é confirmado na chegada do veículo, então nenhum orçamento fecha errado sem alguém da sua equipe ver.</li>
+        <li><strong>Não está incluído:</strong> integração com sistema de gestão ou ERP, disparo de campanhas para a base e atendimento de segunda unidade. Tudo isso existe e é orçado à parte se você quiser depois.</li>
+        <li><strong>Fidelidade:</strong> 12 meses. Na renovação, o valor passa para a tabela vigente com 15% de desconto permanente de cliente fundador.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="close">
+    <p class="eyebrow">Próximo passo</p>
+    <h2 style="font-family:var(--f-display);font-weight:600;font-size:clamp(21px,4vw,27px);margin:0">Me responda no WhatsApp com um "vamos" e eu já marco a reunião de levantamento.</h2>
+    <p>Sem contrato de risco: se em 30 dias no ar o agente não estiver dando conta do seu atendimento, eu devolvo a implantação e a gente encerra sem multa.</p>
+
+    <a class="cta" href="https://wa.me/55DDDNUMERO?text=Vamos%20fechar%20a%20proposta%20do%20agente%20de%20atendimento" target="_blank" rel="noopener">
+      Quero começar
+      <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </a>
+
+    <div class="sign">
+      <b>Rafael · Órion Automação</b>
+      <span>orionagentes.ia.br</span>
+      <span>Proposta válida até 08/10/2026</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
