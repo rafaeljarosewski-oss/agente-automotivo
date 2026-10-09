@@ -27,6 +27,8 @@ export function mensagemNota(d: { cliente: string; tipo: string; numero: string 
   ].join("\n");
 }
 
-export function mensagemOS(d: { cliente: string; numero: number; empresa: string; status: string; link: string }) {
-  return [`Olá, ${primeiroNome(d.cliente)}!`, ``, `Sua ordem de serviço nº ${d.numero} na ${d.empresa} está: *${d.status}*.`, `Acompanhe: ${d.link}`].join("\n");
+export function mensagemOS(d: { cliente: string; numero: number; empresa: string; status: string }) {
+  const complemento =
+    d.status === "Concluída" ? "Seu veículo já está pronto para retirada! 🚗" : d.status === "Aguardando peça" ? "Assim que a peça chegar, avisamos." : "Qualquer novidade, avisamos por aqui.";
+  return [`Olá, ${primeiroNome(d.cliente)}!`, ``, `Sua ordem de serviço nº ${d.numero} na ${d.empresa} está: *${d.status}*.`, complemento].join("\n");
 }

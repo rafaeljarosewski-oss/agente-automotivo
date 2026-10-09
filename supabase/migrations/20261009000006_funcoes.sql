@@ -227,7 +227,12 @@ revoke execute on function public._baixar_metros(uuid, uuid, numeric, uuid, uuid
 -- p_parcelas:  [{"parcela":1,"valor_centavos":1000,"vencimento":"2026-10-09","forma_pagamento":"pix"}]
 -- p_comissoes: [{"os_item_id":"...","instalador_id":"...","base_centavos":1000,"valor_centavos":100}]
 -- -----------------------------------------------------------------------------
-create or replace function public.concluir_os(p_os uuid, p_parcelas jsonb, p_comissoes jsonb default '[]'::jsonb)
+create or replace function public.concluir_os(
+  p_os uuid,
+  p_parcelas jsonb,
+  p_comissoes jsonb default '[]'::jsonb,
+  p_series jsonb default '{}'::jsonb -- {"<os_item_id>": ["SN1", "SN2"]}
+)
 returns void
 language plpgsql
 security definer
@@ -262,6 +267,19 @@ begin
   end if;
 
   v_motivo := 'OS nº ' || v_os.numero;
+
+  -- Números de série informados na conclusão
+  update public.os_itens i
+     set numeros_serie = array(select jsonb_array_elements_text(p_series -> i.id::text))
+   where i.os_id = p_os and p_series ? i.id::text;
+
+  -- Forma de pagamento escolhida na conclusão
+  if jsonb_array_length(coalesce(p_parcelas, '[]'::jsonb)) > 0 then
+    update public.ordens_servico
+       set forma_pagamento = coalesce((p_parcelas -> 0 ->> 'forma_pagamento')::public.forma_pagamento, forma_pagamento),
+           parcelas = jsonb_array_length(p_parcelas)
+     where id = p_os;
+  end if;
 
   -- 1 e 2: estoque
   for v_item in

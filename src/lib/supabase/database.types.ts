@@ -1007,7 +1007,7 @@ isOneToOne: false
 { Args: { "p_cliente": string }; Returns: boolean
                            },
 "concluir_os":
-{ Args: { "p_comissoes"?: Json,"p_os": string,"p_parcelas": Json }; Returns: undefined
+{ Args: { "p_comissoes"?: Json,"p_os": string,"p_parcelas": Json,"p_series"?: Json }; Returns: undefined
                            },
 "criar_politicas":
 { Args: { "p_escrita": (Database["public"]['Enums']["papel_usuario"])[],"p_leitura": (Database["public"]['Enums']["papel_usuario"])[],"p_permite_delete"?: boolean,"p_tabela": string }; Returns: undefined
