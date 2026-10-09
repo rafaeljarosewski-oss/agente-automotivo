@@ -190,6 +190,7 @@ create table public.produtos (
   origem integer not null default 0 check (origem between 0 and 8),
   csosn text,
   cst_icms text,
+  aliquota_icms numeric(5, 2), -- usada somente no Regime Normal com CST 00
   cst_pis text,
   cst_cofins text,
   -- Reforma tributária

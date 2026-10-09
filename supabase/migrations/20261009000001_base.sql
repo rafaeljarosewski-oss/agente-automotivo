@@ -173,8 +173,11 @@ begin
     new.updated_at := new.created_at;
     new.updated_by := coalesce(new.updated_by, new.created_by);
   else
-    new.created_at := old.created_at;
-    new.created_by := old.created_by;
+    -- Somente o service role (importações/migrações de dados) pode corrigir os campos de criação
+    if coalesce(auth.role(), '') <> 'service_role' then
+      new.created_at := old.created_at;
+      new.created_by := old.created_by;
+    end if;
     new.updated_at := now();
     new.updated_by := coalesce(auth.uid(), new.updated_by);
   end if;
