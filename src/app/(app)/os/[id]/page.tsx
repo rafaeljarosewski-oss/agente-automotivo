@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CarIcon, PhoneIcon } from "lucide-react";
+import { CarIcon, HandCoinsIcon, PhoneIcon } from "lucide-react";
 
 import { Cabecalho } from "@/components/comum/cabecalho";
-import { StatusOS } from "@/components/comum/status";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatusOS, StatusTitulo } from "@/components/comum/status";
+import { Button } from "@/components/ui/button";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatarTelefone } from "@/lib/dominio/contato";
-import { formatarDataHora } from "@/lib/dominio/datas";
+import { formatarData, formatarDataHora } from "@/lib/dominio/datas";
 import { formatarMoeda } from "@/lib/dominio/dinheiro";
 import { formatarPlaca } from "@/lib/dominio/placa";
 import { ROTULO_FORMA_PAGAMENTO, ROTULO_STATUS_OS } from "@/lib/dominio/rotulos";
@@ -28,9 +29,10 @@ export default async function PaginaOS({ params }: { params: Promise<{ id: strin
     .is("deleted_at", null)
     .maybeSingle();
   if (!os) notFound();
-  const [{ data: historico }, { data: perfis }] = await Promise.all([
+  const [{ data: historico }, { data: perfis }, { data: titulos }] = await Promise.all([
     supabase.from("os_historico").select("*").eq("os_id", id).order("created_at"),
     supabase.from("perfis").select("id, nome"),
+    instalador ? Promise.resolve({ data: [] }) : supabase.from("contas_receber").select("id, parcela, total_parcelas, valor_centavos, vencimento, status, forma_pagamento").eq("os_id", id).order("parcela"),
   ]);
   const nome = (pid: string | null) => perfis?.find((p) => p.id === pid)?.nome ?? "—";
   const itens = [...os.os_itens].sort((a, b) => a.ordem - b.ordem);
@@ -178,6 +180,36 @@ export default async function PaginaOS({ params }: { params: Promise<{ id: strin
                 {os.observacoes && <p className="whitespace-pre-line">{os.observacoes}</p>}
                 {!instalador && os.observacoes_internas && <p className="whitespace-pre-line text-muted-foreground">Interno: {os.observacoes_internas}</p>}
                 {os.motivo_cancelamento && <p className="text-destructive">Motivo do cancelamento: {os.motivo_cancelamento}</p>}
+              </CardContent>
+            </Card>
+          )}
+
+          {!instalador && titulos && titulos.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Recebimento</CardTitle>
+                <CardAction>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/financeiro/receber?filtro=todos&q=${encodeURIComponent(os.clientes?.nome ?? String(os.numero))}`}>
+                      <HandCoinsIcon /> Contas a receber
+                    </Link>
+                  </Button>
+                </CardAction>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid gap-2 text-sm">
+                  {titulos.map((t) => (
+                    <li key={t.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border px-3 py-2">
+                      <span>
+                        Parcela {t.parcela}/{t.total_parcelas} · vence {formatarData(t.vencimento)}
+                        {t.forma_pagamento && <span className="text-muted-foreground"> · {ROTULO_FORMA_PAGAMENTO[t.forma_pagamento]}</span>}
+                      </span>
+                      <span className="flex items-center gap-2 font-medium">
+                        {formatarMoeda(t.valor_centavos)} <StatusTitulo status={t.status} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
           )}

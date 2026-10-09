@@ -2,9 +2,11 @@ import Link from "next/link";
 
 import { BotaoCSV } from "@/components/comum/botao-csv";
 import { Cabecalho } from "@/components/comum/cabecalho";
+import { CampoBusca } from "@/components/comum/campo-busca";
 import { Card, CardContent } from "@/components/ui/card";
 import { listarReceber, type FiltroTitulo } from "@/lib/consultas/financeiro";
 import { formatarMoeda } from "@/lib/dominio/dinheiro";
+import { normalizarBusca } from "@/lib/dominio/texto";
 import { exigirSessao } from "@/lib/servidor/sessao";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
@@ -19,12 +21,15 @@ const FILTROS: { id: FiltroTitulo; rotulo: string }[] = [
   { id: "todos", rotulo: "Todos" },
 ];
 
-export default async function PaginaReceber({ searchParams }: { searchParams: Promise<{ filtro?: string }> }) {
+export default async function PaginaReceber({ searchParams }: { searchParams: Promise<{ filtro?: string; q?: string }> }) {
   const sessao = await exigirSessao("admin", "atendente");
-  const { filtro: f } = await searchParams;
+  const { filtro: f, q } = await searchParams;
   const filtro = (FILTROS.find((x) => x.id === f)?.id ?? "abertos") as FiltroTitulo;
   const supabase = await criarClienteServidor();
-  const [titulos, { data: caixa }] = await Promise.all([listarReceber(supabase, filtro), supabase.rpc("caixa_aberto")]);
+  const [todos, { data: caixa }] = await Promise.all([listarReceber(supabase, filtro), supabase.rpc("caixa_aberto")]);
+  // Busca por cliente, nº da OS ou descrição (sobre a lista já filtrada por status)
+  const termo = normalizarBusca(q ?? "");
+  const titulos = termo ? todos.filter((t) => normalizarBusca(`${t.cliente ?? ""} ${t.os_numero ?? ""} ${t.descricao}`).includes(termo)) : todos;
   const abertos = titulos.filter((t) => t.status === "aberto");
   const totalAberto = abertos.reduce((s, t) => s + t.valor_centavos, 0);
   const totalVencido = abertos.filter((t) => t.vencido).reduce((s, t) => s + t.valor_centavos, 0);
@@ -51,13 +56,20 @@ export default async function PaginaReceber({ searchParams }: { searchParams: Pr
           </Card>
         </div>
       )}
-      <nav className="mb-4 flex gap-1 overflow-x-auto text-sm">
-        {FILTROS.map((x) => (
-          <Link key={x.id} href={`/financeiro/receber?filtro=${x.id}`} className={cn("rounded-md px-3 py-1.5 whitespace-nowrap", filtro === x.id ? "bg-primary text-primary-foreground" : "hover:bg-accent")}>
-            {x.rotulo}
-          </Link>
-        ))}
-      </nav>
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <nav className="flex gap-1 overflow-x-auto text-sm">
+          {FILTROS.map((x) => (
+            <Link
+              key={x.id}
+              href={`/financeiro/receber?filtro=${x.id}${q ? `&q=${encodeURIComponent(q)}` : ""}`}
+              className={cn("rounded-md px-3 py-1.5 whitespace-nowrap", filtro === x.id ? "bg-primary text-primary-foreground" : "hover:bg-accent")}
+            >
+              {x.rotulo}
+            </Link>
+          ))}
+        </nav>
+        <CampoBusca placeholder="Buscar por cliente ou nº da OS" className="sm:max-w-xs" />
+      </div>
       <TabelaReceber titulos={titulos} caixaAberto={Boolean(caixa)} podeCancelar={sessao.perfil.papel === "admin"} />
     </>
   );

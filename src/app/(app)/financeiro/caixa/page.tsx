@@ -25,7 +25,8 @@ export default async function PaginaCaixa() {
     supabase.from("perfis").select("id, nome"),
   ]);
   const nome = (id: string | null) => perfis?.find((p) => p.id === id)?.nome ?? "—";
-  const resumoComValor = (resumo ?? []).filter((r) => r.entradas || r.saidas);
+  // Dinheiro sempre aparece (gaveta); demais formas só quando houve movimento
+  const resumoVisivel = (resumo ?? []).filter((r) => r.forma_pagamento === "dinheiro" || r.entradas || r.saidas);
 
   return (
     <>
@@ -36,7 +37,7 @@ export default async function PaginaCaixa() {
         <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
           <div className="grid gap-6">
             <div className="grid gap-3 sm:grid-cols-3">
-              {(resumoComValor.length ? resumoComValor : (resumo ?? []).filter((r) => r.forma_pagamento === "dinheiro")).map((r) => (
+              {resumoVisivel.map((r) => (
                 <Card key={r.forma_pagamento} className="gap-1 py-4">
                   <CardContent className="px-4">
                     <p className="text-xs text-muted-foreground">{ROTULO_FORMA_PAGAMENTO[r.forma_pagamento]}</p>
