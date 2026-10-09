@@ -23,7 +23,7 @@ export function supabase(args, { capturar = false, env = {} } = {}) {
   return r;
 }
 
-export const SERVICOS_IGNORADOS = ["imgproxy", "vector", "logflare", "supavisor", "edge-runtime", "realtime", "postgres-meta"];
+export const SERVICOS_IGNORADOS = ["imgproxy", "vector", "logflare", "supavisor", "edge-runtime", "realtime"];
 
 export function iniciar() {
   const args = ["start", "-x", SERVICOS_IGNORADOS.join(",")];

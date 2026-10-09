@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const ROTAS_PUBLICAS = ["/login", "/p/", "/api/fiscal/webhook", "/api/cron/", "/api/publico/", "/recuperar-senha"];
+const ROTAS_PUBLICAS = ["/login", "/p/", "/api/fiscal/webhook", "/api/cron/"];
 
 /**
  * Renova a sessão do Supabase a cada requisição e protege as rotas internas.

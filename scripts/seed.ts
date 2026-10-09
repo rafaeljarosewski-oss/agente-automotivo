@@ -3,8 +3,6 @@
  * Usa a chave secreta do Supabase local. NÃO rode contra o banco de produção.
  */
 import { createCipheriv, randomBytes } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
-import path from "node:path";
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
@@ -23,19 +21,14 @@ import {
   SERVICOS,
   USUARIOS_DEMO,
 } from "./seed-dados";
+import { carregarAmbiente } from "./ambiente";
 
 type SB = SupabaseClient<Database>;
 
 // ---------------------------------------------------------------------------
 // Ambiente
 // ---------------------------------------------------------------------------
-const arquivoEnv = path.resolve(process.cwd(), ".env.local");
-if (existsSync(arquivoEnv)) {
-  for (const linha of readFileSync(arquivoEnv, "utf8").split("\n")) {
-    const i = linha.indexOf("=");
-    if (i > 0 && !linha.trim().startsWith("#")) process.env[linha.slice(0, i).trim()] ??= linha.slice(i + 1).trim();
-  }
-}
+carregarAmbiente();
 const URL_SB = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://127.0.0.1:54321";
 const CHAVE_SECRETA = process.env.SUPABASE_SECRET_KEY;
 const CHAVE_PUBLICA = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;

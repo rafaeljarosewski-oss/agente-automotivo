@@ -140,3 +140,52 @@ O Supabase CLI baixa imagens de `public.ecr.aws` por padrão. O script `scripts/
 
 O seed (`scripts/seed.ts`, executado com `tsx`) usa a API do Supabase com a chave secreta e reaproveita as mesmas funções de
 cálculo do sistema, para que orçamentos e OS de exemplo tenham totais coerentes.
+
+## D17 — Rotinas agendadas: Vercel (diária) + GitHub Actions (10 minutos)
+
+O plano Hobby da Vercel só aceita cron **uma vez por dia** e uma expressão mais frequente faz o deploy falhar
+(documentação de uso e preços dos Cron Jobs da Vercel). Por isso:
+- `vercel.json` agenda só `/api/cron/diario` (06:00 de Brasília): expira orçamentos e faz uma sincronização fiscal completa.
+- `.github/workflows/sincronizacao-fiscal.yml` chama `/api/cron/fiscal-sync` a cada 10 minutos; fica inativo até os segredos
+  `APP_URL` e `CRON_SECRET` serem cadastrados no GitHub.
+- A tela da nota consulta o provedor sozinha enquanto ela está em processamento (2 s, crescendo até 15 s), então o usuário
+  quase nunca depende das rotinas. No plano Pro da Vercel dá para trocar o GitHub Actions por um cron `*/5` no `vercel.json`.
+
+## D18 — Emissor simulado nunca emite em produção
+
+O `FiscalProviderMock` recusa pedidos com ambiente `producao`. Assim, uma loja configurada em produção num servidor
+esquecido com `FISCAL_PROVIDER=mock` recebe um erro claro em vez de uma "nota autorizada" sem valor fiscal.
+O `deploy:supabase` já grava `FISCAL_PROVIDER=acbr` no `.env.producao`; sem credenciais, a emissão falha com
+"Credenciais da API fiscal não configuradas".
+
+## D19 — Senhas sem e-mail na Fase 1
+
+Não há servidor de e-mail (SMTP) configurado, então não existe "esqueci minha senha" por e-mail: o administrador da loja
+redefine a senha em *Configurações › Usuários* e cada usuário troca a própria em *Minha conta* (com a senha atual).
+A conferência da senha atual usa um cliente Supabase separado e encerra só aquela sessão (`signOut({ scope: "local" })` —
+o padrão `global` derrubaria também a sessão do navegador). O cadastro público do Supabase Auth fica desligado
+(`enable_signup = false`, aplicado na nuvem pelo `supabase config push`).
+
+## D20 — Publicação por scripts e `.env.producao`
+
+`deploy:supabase` usa a Supabase CLI do projeto (`projects create`, `link`, `db push`, `config push`, `projects api-keys`);
+`deploy:vercel` usa a Vercel CLI com versão fixa (63.1.0: `link`, `env add --value --sensitive`, `deploy --prod`).
+Opções conferidas no `--help` das versões instaladas. Os valores ficam num `.env.producao` local (ignorado pelo Git) que
+é a fonte única para a Vercel e para o `empresa:nova`. Segredos existentes são reaproveitados a cada execução —
+trocar a `APP_ENCRYPTION_KEY` tornaria ilegíveis os CSCs já salvos.
+
+## D21 — Cadastro de lojas por script
+
+Na Fase 1 não há autoatendimento: a Órion cadastra cada loja com `npm run empresa:nova` (consulta o CNPJ na BrasilAPI,
+cria empresa e administrador com senha temporária e desfaz tudo se algum passo falhar). Um e-mail pertence a uma só loja (D13).
+
+## D22 — Consultas de CEP e CNPJ
+
+CEP: ViaCEP e, se falhar, BrasilAPI; CNPJ: BrasilAPI (endpoint `/api/cnpj/v1`). São serviços públicos sem contrato de
+disponibilidade, então qualquer falha devolve "não encontrado" e a pessoa preenche à mão. O mapeamento dos campos
+(endereço, regime Simples/MEI, CNAE, código IBGE) foi feito a partir das respostas públicas desses serviços.
+
+## D23 — Supabase local com Studio
+
+O `db:start` desliga serviços que o sistema não usa (realtime, edge functions, logs, imgproxy, pooler) para baixar menos
+imagens, mas mantém o `postgres-meta`, necessário para o Supabase Studio (<http://127.0.0.1:54323>) funcionar.

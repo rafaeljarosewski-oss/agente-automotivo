@@ -113,6 +113,11 @@ describe("FiscalProviderMock", () => {
     expect(xml).toContain(c.chave!);
   });
 
+  it("recusa emitir em produção (nunca simula nota com valor fiscal)", async () => {
+    const mock = new MockFiscalProvider({ atrasoMs: 0 });
+    await expect(mock.emitir(pedido("nfce", { ambiente: "producao" }))).rejects.toThrow(/não emite em produção/);
+  });
+
   it("simula rejeição por NCM inexistente e por marcação [REJEITAR]", async () => {
     const mock = new MockFiscalProvider({ atrasoMs: 0 });
     const p = pedido("nfce");

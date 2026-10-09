@@ -1,10 +1,9 @@
-import "server-only";
-
 import { normalizarDocumento, somenteDigitos } from "@/lib/dominio/documentos";
 
 /**
  * Consultas a serviços públicos: endereço por CEP (ViaCEP, com BrasilAPI como alternativa)
  * e dados de empresa por CNPJ (BrasilAPI). Falhas retornam null — o usuário preenche à mão.
+ * Sem segredos: também é usado pelo script `npm run empresa:nova`.
  */
 
 export interface EnderecoConsultado {

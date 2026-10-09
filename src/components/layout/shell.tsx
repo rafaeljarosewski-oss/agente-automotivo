@@ -89,13 +89,13 @@ function Menu({ papel, aoNavegar }: { papel: PapelUsuario; aoNavegar?: () => voi
   );
 }
 
-function Rodape({ nomeUsuario, papel }: { nomeUsuario: string; papel: PapelUsuario }) {
+function Rodape({ nomeUsuario, papel, aoNavegar }: { nomeUsuario: string; papel: PapelUsuario; aoNavegar?: () => void }) {
   return (
     <div className="border-t border-sidebar-border p-3">
-      <div className="mb-2 px-2 text-sm">
+      <Link href="/conta" onClick={aoNavegar} className="mb-2 block rounded-md px-2 py-1 text-sm hover:bg-sidebar-accent" title="Minha conta e senha">
         <div className="truncate font-medium text-sidebar-foreground">{nomeUsuario}</div>
         <div className="text-xs text-sidebar-foreground/60">{ROTULO_PAPEL[papel]}</div>
-      </div>
+      </Link>
       <form action={sair}>
         <Button
           type="submit"
@@ -149,7 +149,7 @@ export function Shell({ nomeUsuario, papel, nomeEmpresa, ambienteFiscal, childre
           <div className="flex-1 overflow-y-auto pb-4">
             <Menu papel={papel} aoNavegar={() => setAberto(false)} />
           </div>
-          <Rodape nomeUsuario={nomeUsuario} papel={papel} />
+          <Rodape nomeUsuario={nomeUsuario} papel={papel} aoNavegar={() => setAberto(false)} />
         </SheetContent>
       </Sheet>
 

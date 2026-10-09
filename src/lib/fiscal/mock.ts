@@ -12,6 +12,7 @@
 import { validarCpfCnpj } from "@/lib/dominio/documentos";
 import { assinarWebhook, CABECALHO_ASSINATURA } from "./assinatura";
 import { CODIGO_UF, validarPedido } from "./mapeamento";
+import { ErroFiscal } from "./tipos";
 import type {
   ConfiguracaoEmpresaFiscal,
   EmitenteFiscal,
@@ -146,6 +147,10 @@ export class MockFiscalProvider implements FiscalProvider {
   }
 
   async emitir(p: PedidoEmissao): Promise<RespostaDocumento> {
+    // Nunca simular autorização com valor fiscal
+    if (p.ambiente === "producao") {
+      throw new ErroFiscal("O emissor simulado (FISCAL_PROVIDER=mock) não emite em produção. Configure a API fiscal ou volte a loja para homologação.");
+    }
     const erros = validarPedido(p);
     if (erros.length) {
       return this.resposta({ t: p.tipo, ts: Date.now(), n: p.numero, s: p.serie, cnpj: p.emitente.cnpj, uf: p.emitente.endereco.uf, amb: p.ambiente, v: 0, rej: { c: "225", m: erros.join(" ") } }, "erro");

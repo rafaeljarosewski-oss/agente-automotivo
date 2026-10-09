@@ -1,0 +1,26 @@
+# Consulta periódica das notas fiscais em processamento (rede de segurança além do webhook
+# e da consulta automática da tela). O plano Hobby da Vercel só permite cron diário, por isso
+# o agendamento a cada 10 minutos fica aqui. Fica inativo até os segredos serem cadastrados:
+# GitHub → Settings → Secrets and variables → Actions → APP_URL e CRON_SECRET.
+name: Sincronização fiscal
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Chamar /api/cron/fiscal-sync
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$APP_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "Segredos APP_URL/CRON_SECRET não cadastrados — nada a fazer."
+            exit 0
+          fi
+          curl --fail-with-body -sS -m 120 -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/cron/fiscal-sync"

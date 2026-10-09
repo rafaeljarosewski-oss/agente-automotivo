@@ -40,6 +40,7 @@ export function FormularioLogin() {
         {pendente ? <Loader2Icon className="animate-spin" /> : <LogInIcon />}
         Entrar
       </Button>
+      <p className="text-center text-xs text-muted-foreground">Esqueceu a senha? Peça ao administrador da loja para redefinir.</p>
     </form>
   );
 }
