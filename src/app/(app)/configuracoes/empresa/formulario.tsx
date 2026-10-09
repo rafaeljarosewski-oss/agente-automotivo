@@ -160,7 +160,7 @@ export function FormularioLogo({ urlLogo }: { urlLogo: string | null }) {
           }}
           className="grid gap-2"
         >
-          <Input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required />
+          <Input type="file" name="logo" accept="image/png,image/jpeg" required />
           <Button type="submit" variant="outline" disabled={pendente}>
             {pendente ? <Loader2Icon className="animate-spin" /> : <ImageUpIcon />} Enviar logotipo
           </Button>

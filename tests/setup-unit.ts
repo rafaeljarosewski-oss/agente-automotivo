@@ -4,4 +4,4 @@ import { vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 process.env.TZ = "America/Sao_Paulo";
-process.env.APP_ENCRYPTION_KEY ??= "dGVzdGUtY2hhdmUtZGUtMzItYnl0ZXMtcGFyYS10ZXN0ZXM=";
+process.env.APP_ENCRYPTION_KEY = "Y2hhdmUtZGUtdGVzdGUtY29tLTMyLWJ5dGVzLTAwMDE=";

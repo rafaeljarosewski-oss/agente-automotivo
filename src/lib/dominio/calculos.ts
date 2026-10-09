@@ -55,7 +55,7 @@ export function precoPelicula(
 // ---------------------------------------------------------------------------
 
 export interface MedidaVidro {
-  descricao?: string;
+  descricao?: string | null;
   largura_m: number;
   altura_m: number;
   quantidade: number;

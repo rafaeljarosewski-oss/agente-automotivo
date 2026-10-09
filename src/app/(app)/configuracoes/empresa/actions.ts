@@ -15,13 +15,14 @@ export async function salvarEmpresa(entrada: EmpresaEntrada) {
   });
 }
 
-const TIPOS_IMAGEM = ["image/png", "image/jpeg", "image/webp"];
+// PNG e JPG são os formatos aceitos pelo gerador de PDF
+const TIPOS_IMAGEM = ["image/png", "image/jpeg"];
 
 export async function enviarLogo(formData: FormData) {
   return executarAcao({ papeis: ["admin"], schema: z.object({}), entrada: {} }, async (_d, { supabase, sessao }) => {
     const arquivo = formData.get("logo");
     if (!(arquivo instanceof File) || arquivo.size === 0) return falha("Selecione uma imagem.");
-    if (!TIPOS_IMAGEM.includes(arquivo.type)) return falha("Use uma imagem PNG, JPG ou WEBP.");
+    if (!TIPOS_IMAGEM.includes(arquivo.type)) return falha("Use uma imagem PNG ou JPG.");
     if (arquivo.size > 2 * 1024 * 1024) return falha("A imagem deve ter no máximo 2 MB.");
     const ext = arquivo.type.split("/")[1];
     const caminho = `${sessao.empresa.id}/logo/logo-${Date.now()}.${ext}`;
