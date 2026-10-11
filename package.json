@@ -23,6 +23,8 @@
     "db:reset": "node scripts/supabase.mjs db reset",
     "db:seed": "tsx scripts/seed.ts",
     "db:types": "node scripts/supabase.mjs gen types typescript --local --schema public > src/lib/supabase/database.types.ts",
+    "publicar": "tsx scripts/publicar.ts",
+    "publicar:banco": "tsx scripts/publicar.ts --so-banco",
     "deploy:supabase": "bash scripts/deploy-supabase.sh",
     "deploy:vercel": "bash scripts/deploy-vercel.sh",
     "empresa:nova": "tsx scripts/nova-empresa.ts"
