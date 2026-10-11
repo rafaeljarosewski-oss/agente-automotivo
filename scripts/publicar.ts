@@ -127,7 +127,11 @@ function cli(comando: string, args: string[], extraEnv: Record<string, string> =
     shell: process.platform === "win32",
     maxBuffer: 64 * 1024 * 1024,
   });
-  if (r.status !== 0) throw new Error(`${comando} ${args.filter((a) => !a.startsWith("--token")).join(" ")} falhou (código ${r.status}).\n${r.stdout ?? ""}\n${r.stderr ?? ""}`);
+  if (r.status !== 0) {
+    // Nunca exibir segredos (token, senha do banco) na mensagem de erro
+    const visiveis = args.map((a, i) => (a.startsWith("--token") || args[i - 1] === "--db-password" ? "***" : a));
+    throw new Error(`${comando} ${visiveis.join(" ")} falhou (código ${r.status}).\n${r.stdout ?? ""}\n${r.stderr ?? ""}`);
+  }
   return r.stdout ?? "";
 }
 
@@ -156,7 +160,8 @@ async function projetoSupabase(): Promise<string> {
   let org = process.env.SUPABASE_ORG_ID;
   if (!org) {
     const orgs = await sb<{ id: string; slug?: string; name: string }[]>("GET", "/v1/organizations");
-    if (orgs.length === 0) erro("Nenhuma organização na conta Supabase. Crie uma em https://supabase.com/dashboard.");
+    // Organização tem de ser criada pelo painel: criada com token pessoal, ela não fica vinculada ao usuário
+    if (orgs.length === 0) erro("Nenhuma organização na conta Supabase. Crie uma em https://supabase.com/dashboard/new (plano Free) e rode de novo.");
     if (orgs.length > 1) erro(`Há mais de uma organização (${orgs.map((o) => `${o.slug ?? o.id} = ${o.name}`).join("; ")}). Rode com SUPABASE_ORG_ID=<id>.`);
     org = orgs[0]!.slug ?? orgs[0]!.id;
   }
