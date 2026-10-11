@@ -81,8 +81,20 @@ function criptografar(texto: string): string | null {
   return ["v1", iv.toString("base64"), cifra.getAuthTag().toString("base64"), conteudo.toString("base64")].join(".");
 }
 
+/** Num banco remoto (demonstração na nuvem) use SEED_SENHA: a senha padrão está publicada no repositório */
+const SENHA_SEED = process.env.SEED_SENHA;
+if (SENHA_SEED !== undefined && SENHA_SEED.length < 12) {
+  console.error("SEED_SENHA deve ter pelo menos 12 caracteres.");
+  process.exit(1);
+}
+if (!/127\.0\.0\.1|localhost/.test(URL_SB) && !SENHA_SEED) {
+  console.error("Num banco remoto, defina SEED_SENHA (a senha padrão Demo@2026 é pública).");
+  process.exit(1);
+}
+const senhaDe = (senha: string) => SENHA_SEED ?? senha;
+
 async function criarUsuario(empresaId: string, u: { nome: string; email: string; senha: string; papel: "admin" | "atendente" | "instalador" }) {
-  const { data, error } = await admin.auth.admin.createUser({ email: u.email, password: u.senha, email_confirm: true, user_metadata: { nome: u.nome } });
+  const { data, error } = await admin.auth.admin.createUser({ email: u.email, password: senhaDe(u.senha), email_confirm: true, user_metadata: { nome: u.nome } });
   if (error) {
     console.error(`✖ Usuário ${u.email}:`, error.message);
     process.exit(1);
@@ -93,7 +105,7 @@ async function criarUsuario(empresaId: string, u: { nome: string; email: string;
 
 async function entrar(email: string, senha: string): Promise<SB> {
   const cliente = createClient<Database>(URL_SB, CHAVE_PUBLICA!, { auth: { persistSession: false, autoRefreshToken: false } });
-  const { error } = await cliente.auth.signInWithPassword({ email, password: senha });
+  const { error } = await cliente.auth.signInWithPassword({ email, password: senhaDe(senha) });
   if (error) throw error;
   return cliente;
 }

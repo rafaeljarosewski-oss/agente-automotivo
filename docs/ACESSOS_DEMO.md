@@ -40,3 +40,13 @@ ficam "Em processamento" por ~1,5 s e depois são autorizadas, com XML e PDF de 
   usa os cadastros atuais, que já estão corretos.
 - Para provocar uma rejeição nova: em **Catálogo**, mude o NCM de um produto para `00000000`,
   conclua uma OS com ele e emita. Depois corrija o NCM e use **Reenviar nota**.
+
+## Demonstração em produção
+
+A mesma loja de demonstração foi carregada em <https://orion-oficina.vercel.app> (11/10/2026), com os mesmos e-mails acima,
+mas com uma **senha forte própria** — a senha `Demo@2026` **não** funciona em produção. A senha foi entregue ao
+responsável e não fica no repositório. Para recarregar a demonstração num banco remoto, o seed exige `SEED_SENHA`
+(mínimo 12 caracteres) e `SEED_PERMITIR_REMOTO=1`.
+
+Em produção as notas fiscais usam a ACBr API: até as credenciais serem configuradas, emitir nota mostra
+"Credenciais da API fiscal não configuradas". Todo o resto (orçamentos, OS, estoque, financeiro, relatórios) funciona.
