@@ -1,0 +1,13 @@
+# Nunca enviar segredos nem artefatos locais no upload para a Vercel
+.env*
+!.env.example
+node_modules
+.next
+.vercel
+test-results
+playwright-report
+playwright/.cache
+supabase/.temp
+supabase/.branches
+*.log
+coverage

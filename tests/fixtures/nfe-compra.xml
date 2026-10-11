@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe>
+    <infNFe Id="NFe43261098765432000110550010000123451123456789" versao="4.00">
+      <ide><cUF>43</cUF><natOp>VENDA DE MERCADORIA</natOp><mod>55</mod><serie>1</serie><nNF>12345</nNF><dhEmi>2026-10-05T09:30:00-03:00</dhEmi><tpNF>1</tpNF></ide>
+      <emit><CNPJ>98765432000110</CNPJ><xNome>Insulfilm Distribuidora Sul LTDA</xNome><xFant>Insulfilm Sul</xFant></emit>
+      <dest><CNPJ>45781263000113</CNPJ><xNome>Prime Peliculas e Acessorios Automotivos LTDA</xNome></dest>
+      <det nItem="1"><prod><cProd>INS-G20-152</cProd><cEAN>SEM GTIN</cEAN><xProd>PELICULA AUTOMOTIVA G20 ROLO 1,52 X 30M</xProd><NCM>39206219</NCM><CFOP>6102</CFOP><uCom>RL</uCom><qCom>1.0000</qCom><vUnCom>435.0000000000</vUnCom><vProd>435.00</vProd></prod></det>
+      <det nItem="2"><prod><cProd>SHK-H7</cProd><cEAN>7898612345035</cEAN><xProd>LAMPADA LED H7 6000K SHOCKLIGHT PAR</xProd><NCM>85395200</NCM><CFOP>6403</CFOP><uCom>PAR</uCom><qCom>6.0000</qCom><vUnCom>58.0000000000</vUnCom><vProd>348.00</vProd></prod></det>
+      <det nItem="3"><prod><cProd>ESP-CER-01</cProd><cEAN>SEM GTIN</cEAN><xProd>ESPATULA PROFISSIONAL PARA APLICACAO DE PELICULA</xProd><NCM>39269090</NCM><CFOP>6102</CFOP><uCom>UN</uCom><qCom>3.0000</qCom><vUnCom>19.9000000000</vUnCom><vProd>59.70</vProd></prod></det>
+      <total><ICMSTot><vProd>842.70</vProd><vNF>842.70</vNF></ICMSTot></total>
+      <cobr><dup><nDup>001</nDup><dVenc>2026-11-04</dVenc><vDup>421.35</vDup></dup><dup><nDup>002</nDup><dVenc>2026-12-04</dVenc><vDup>421.35</vDup></dup></cobr>
+    </infNFe>
+  </NFe>
+  <protNFe versao="4.00"><infProt><chNFe>43261098765432000110550010000123451123456789</chNFe><nProt>143260000123456</nProt><cStat>100</cStat></infProt></protNFe>
+</nfeProc>
