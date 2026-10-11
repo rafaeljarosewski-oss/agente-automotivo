@@ -4,72 +4,43 @@
 > O sistema já funciona sem nada disto: localmente, com o **emissor fiscal simulado** e os dados de exemplo
 > (`npm run setup` → <http://localhost:3000>). Marque `[x]` conforme for resolvendo.
 >
-> Ordem sugerida: 1 → 2 → 3 → 4 (publicar) e, em paralelo, 5 a 7 (fiscal e loja).
+> O sistema já está publicado. Falta: segurança (1), decisões de plano (2) e a parte fiscal e das lojas (3 a 5).
 
 ---
 
-## 1. Programas no seu computador
+## ✅ Já feito (11/10/2026)
 
-- [ ] **Node.js 20.9 ou mais novo** — baixe a versão "LTS" em <https://nodejs.org> e instale com as opções padrão.
-- [ ] **Docker Desktop** — <https://www.docker.com/products/docker-desktop/>. Instale e **deixe aberto** sempre que for usar o sistema localmente (o banco local roda nele).
-- [ ] **jq** e **openssl** (só para o script de publicação do banco):
-  - Mac: `brew install jq` (o openssl já vem instalado).
-  - Windows: use o terminal **Git Bash** ou o **WSL**; no WSL: `sudo apt install jq openssl`.
-- [ ] Testar: na pasta do projeto, rode `npm run setup` e depois `npm run dev`. Abra <http://localhost:3000> e entre com `admin@demo.orion.app` / `Demo@2026`.
+- [x] Banco na nuvem: Supabase, projeto **orion-oficina** (São Paulo) — <https://supabase.com/dashboard/project/wyfwenwibsrkysguuvjl>.
+  Migrações aplicadas, RLS em todas as tabelas, cadastro público desligado.
+- [x] Site no ar: **<https://orion-oficina.vercel.app>** (Vercel, time `orion-automacao`).
+- [x] Sincronização fiscal a cada 10 minutos agendada dentro do banco (pg_cron) — não precisa de nada no GitHub.
+- [x] Testado em produção: login (computador e celular), rotina protegida por segredo e agendamento chamando o site.
 
-## 2. Banco de dados na nuvem (Supabase)
+## 1. Segurança — faça agora
 
-- [ ] Crie uma conta gratuita em <https://supabase.com/dashboard/sign-up> (pode entrar com o GitHub).
-- [ ] No terminal, na pasta do projeto:
-  ```bash
-  npx supabase login
-  ```
-  O navegador abre pedindo autorização → clique **Authorize**. Volte ao terminal.
-- [ ] Rode:
-  ```bash
-  npm run deploy:supabase
-  ```
-  Ele cria o projeto **orion-oficina** em São Paulo, aplica o banco e gera o arquivo `.env.producao`.
-  Se aparecer "Há mais de uma organização", copie o código da organização listada e rode
-  `SUPABASE_ORG_ID=<código> npm run deploy:supabase`.
-- [ ] **Guarde uma cópia do `.env.producao`** num cofre de senhas (1Password, Bitwarden…). Ele tem a senha do banco
-  e a chave que protege os CSCs — se perder a `APP_ENCRYPTION_KEY`, os CSCs das lojas terão de ser digitados de novo.
-- [ ] Conferir no painel do Supabase (<https://supabase.com/dashboard> › orion-oficina › **Authentication** › **Sign In / Providers**)
-  que **"Allow new users to sign up" está desligado**. O script já faz isso; confira uma vez.
-- [ ] (Opcional) Em **Authentication › URL Configuration › Site URL**, troque `http://localhost:3000` pelo endereço do
-  sistema (passo 3). Hoje o sistema não envia e-mails, então isso só importa no futuro.
+- [ ] **Guarde o arquivo `.env.producao`** (enviado para você na conversa) num cofre de senhas (1Password, Bitwarden…).
+  Ele tem a senha do banco e as chaves do sistema; o ambiente onde ele foi gerado é temporário. Sem a `APP_ENCRYPTION_KEY`
+  dele, os CSCs salvos pelas lojas teriam de ser digitados de novo.
+- [ ] **Apague os tokens usados na publicação**:
+  - Supabase: <https://supabase.com/dashboard/account/tokens> › lixeira em `orion-deploy` e `orion-deploy-2`.
+  - Vercel: <https://vercel.com/account/settings/tokens> › lixeira em `orion-deploy`.
+- [ ] **Gere novos códigos de recuperação da Vercel** (os antigos foram enviados na conversa):
+  Vercel › **Account Settings** › **Authentication** › códigos de recuperação › gerar novos.
 
-## 3. Site no ar (Vercel)
+## 2. Recomendado antes de vender
 
-- [ ] Crie uma conta em <https://vercel.com/signup> (plano **Hobby**, gratuito, entrando com o GitHub).
-- [ ] No terminal:
-  ```bash
-  npx vercel login
-  ```
-  Escolha **Continue with GitHub** e confirme no navegador.
-- [ ] Rode:
-  ```bash
-  npm run deploy:vercel
-  ```
-  No fim aparece o endereço publicado.
-- [ ] Abra <https://vercel.com/dashboard> › **orion-oficina** › **Settings** › **Domains** e veja o endereço de produção
-  (ex.: `orion-oficina.vercel.app`). Se for diferente do `NEXT_PUBLIC_APP_URL` que está no `.env.producao`, corrija
-  essa linha no arquivo e rode `npm run deploy:vercel` de novo (esse endereço vai nos links do WhatsApp).
-- [ ] Para publicar sozinho a cada `git push`: no mesmo projeto, **Settings › Git › Connect Git Repository** → escolha
-  `rafaeljarosewski-oss/agente-automotivo`.
-- [ ] (Opcional) Domínio próprio (ex.: `sistema.orionautomacao.com.br`): **Settings › Domains › Add** e siga as instruções de DNS
-  no seu provedor de domínio. Depois atualize `NEXT_PUBLIC_APP_URL` e rode `npm run deploy:vercel`.
-- [ ] Plano: o **Hobby** é só para uso não comercial. Para vender o sistema às lojas, assine o **Pro** (Vercel ›
-  Settings › Billing). No Pro dá para rodar a sincronização fiscal pela própria Vercel; no Hobby ela fica no GitHub (passo 4).
+- [ ] **Planos pagos**: o Vercel **Hobby** é só para uso não comercial e projetos Supabase **Free** são pausados após
+  7 dias sem uso. Ao colocar a primeira loja pagante: Vercel **Pro** (Settings › Billing) e Supabase **Pro**
+  (painel › Organization › Billing › Upgrade to Pro).
+- [ ] **Publicar sozinho a cada `git push`** (opcional): Vercel › projeto **orion-oficina** › **Settings** › **Git** ›
+  **Connect Git Repository** › `rafaeljarosewski-oss/agente-automotivo`. Sem isso, para publicar de novo:
+  `SUPABASE_ACCESS_TOKEN=... VERCEL_TOKEN=... VERCEL_SCOPE=orion-automacao npm run publicar` (com o `.env.producao` na pasta).
+- [ ] **Domínio próprio** (opcional, ex.: `sistema.orionautomacao.com.br`): Vercel › **Settings** › **Domains** › **Add** e siga as
+  instruções de DNS. Depois rode `npm run publicar` de novo (ele detecta o domínio e atualiza os links do WhatsApp).
+- [ ] **Rodar no seu computador** (opcional, para desenvolver/demonstrar offline): instale Node.js LTS (<https://nodejs.org>) e
+  Docker Desktop, e na pasta do projeto rode `npm run setup` e `npm run dev`.
 
-## 4. Sincronização fiscal automática (GitHub)
-
-- [ ] No GitHub, abra o repositório › **Settings** › **Secrets and variables** › **Actions** › **New repository secret** e crie:
-  - `APP_URL` = endereço do sistema (ex.: `https://orion-oficina.vercel.app`, sem barra no final)
-  - `CRON_SECRET` = valor da linha `CRON_SECRET=` do `.env.producao`
-- [ ] Teste: aba **Actions** › **Sincronização fiscal** › **Run workflow**. Deve terminar com ✓ verde.
-
-## 5. Emissão fiscal — conta da Órion na ACBr API
+## 3. Emissão fiscal — conta da Órion na ACBr API
 
 A Nuvem Fiscal foi desativada em 31/07/2026; a sucessora oficial é a **ACBr API** (mesma API). Veja `docs/DECISOES.md`, D01.
 
@@ -85,16 +56,16 @@ A Nuvem Fiscal foi desativada em 31/07/2026; a sucessora oficial é a **ACBr API
   FISCAL_CLIENT_ID=<cole aqui>
   FISCAL_CLIENT_SECRET=<cole aqui>
   ```
-  e rode `npm run deploy:vercel`. Para testar no seu computador, coloque as mesmas linhas no `.env.local` e reinicie o `npm run dev`.
+  e rode `npm run publicar` (com os tokens, como na seção 2). Para testar no seu computador, coloque as mesmas linhas no `.env.local` e reinicie o `npm run dev`.
 - [ ] Quando a homologação estiver aprovada: gere as credenciais de **produção**, troque no `.env.producao`
-  (`FISCAL_CREDENCIAL=producao` e os novos ID/Secret) e rode `npm run deploy:vercel`.
+  (`FISCAL_CREDENCIAL=producao` e os novos ID/Secret) e rode `npm run publicar` (com os tokens, como na seção 2).
 - [ ] Pergunte ao suporte da ACBr API se eles oferecem **webhook** (aviso automático de autorização). Se sim, cadastre o endereço
   `https://<seu-endereço>/api/fiscal/webhook` e o segredo `FISCAL_WEBHOOK_SECRET` do `.env.producao`, e me envie o formato da
   assinatura que eles usam para eu ajustar (hoje o sistema consulta sozinho, então isso é só uma melhoria).
 - [ ] **Responsável técnico** (exigido em algumas SEFAZ na NF-e/NFC-e): preencha no `.env.producao` o CNPJ, e-mail e telefone
-  da Órion (`RESP_TECNICO_CNPJ`, `RESP_TECNICO_EMAIL`, `RESP_TECNICO_FONE`) e rode `npm run deploy:vercel`.
+  da Órion (`RESP_TECNICO_CNPJ`, `RESP_TECNICO_EMAIL`, `RESP_TECNICO_FONE`) e rode `npm run publicar` (com os tokens, como na seção 2).
 
-## 6. Primeira loja (para cada cliente novo)
+## 4. Primeira loja (para cada cliente novo)
 
 - [ ] Cadastrar a loja:
   ```bash
@@ -108,7 +79,7 @@ A Nuvem Fiscal foi desativada em 31/07/2026; a sucessora oficial é a **ACBr API
   - [ ] **Inscrição estadual** (para NFC-e/NF-e) e **inscrição municipal** (para NFS-e).
   - [ ] Tabela de preços de películas e serviços, e a lista de produtos com estoque inicial.
 
-## 7. Com o contador da loja
+## 5. Com o contador da loja
 
 - [ ] Confirmar que a loja está **credenciada para emitir NFC-e e NF-e na SEFAZ-RS** (ou no estado dela).
 - [ ] **CSC da NFC-e** (código de segurança do contribuinte) e o **ID do CSC**: gerado no portal da Receita Estadual com o

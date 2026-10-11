@@ -276,7 +276,15 @@ function publicarVercel(): string {
   vercel(["link", "--yes", "--project", NOME], false);
   info("Publicando em produção (o build roda na Vercel, ~3 minutos)...");
   const saida = vercel(["deploy", "--prod", "--yes"]);
-  const url = saida.trim().split("\n").filter((l) => l.startsWith("https://")).pop();
+  // Fora de um terminal interativo, a CLI responde em JSON; em terminal, imprime a URL na última linha
+  let url: string | undefined;
+  try {
+    const json = JSON.parse(saida.slice(saida.indexOf("{"))) as { deployment?: { url?: string; readyState?: string } };
+    if (json.deployment?.readyState && json.deployment.readyState !== "READY") erro(`A publicação terminou com estado ${json.deployment.readyState}.`);
+    url = json.deployment?.url;
+  } catch {
+    url = saida.trim().split("\n").filter((l) => l.startsWith("https://")).pop();
+  }
   if (!url) erro(`Não consegui ler o endereço da publicação:\n${saida}`);
   return url;
 }

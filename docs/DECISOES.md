@@ -189,3 +189,20 @@ disponibilidade, então qualquer falha devolve "não encontrado" e a pessoa pree
 
 O `db:start` desliga serviços que o sistema não usa (realtime, edge functions, logs, imgproxy, pooler) para baixar menos
 imagens, mas mantém o `postgres-meta`, necessário para o Supabase Studio (<http://127.0.0.1:54323>) funcionar.
+
+## D24 — Publicação só por HTTPS (`npm run publicar`)
+
+Em redes com proxy (como o ambiente de nuvem onde o sistema foi publicado), a conexão direta ao Postgres usada por
+`supabase db push` não passa. O `scripts/publicar.ts` aplica as migrações pela Management API da Supabase
+(`POST /v1/projects/{ref}/database/query`), uma requisição por migração (transação implícita: migração e registro no
+histórico entram juntos) e registra cada uma em `supabase_migrations.schema_migrations` no mesmo formato da CLI, para que
+um `supabase db push` futuro reconheça o que já foi aplicado. Os objetos são criados como `postgres` (`set role postgres`),
+o mesmo dono que a CLI usaria. A Vercel é configurada pela API REST (projeto, variáveis com `upsert`, domínios) e a
+publicação usa a CLI com `--token`. Uma organização Supabase criada pela API com token pessoal não fica vinculada ao
+usuário: ela deve ser criada pelo painel.
+
+## D25 — Sincronização fiscal agendada no banco
+
+Com pg_cron + pg_net na Supabase (migração 09), o banco chama `/api/cron/fiscal-sync` a cada 10 minutos, com o
+`CRON_SECRET` guardado no Supabase Vault. Isso dispensa o workflow do GitHub de D17 (que continua no repositório, inativo
+sem os segredos) e funciona no plano Hobby da Vercel. A rotina diária da Vercel (`vercel.json`) continua como reserva.

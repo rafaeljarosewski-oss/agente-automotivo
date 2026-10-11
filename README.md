@@ -43,7 +43,7 @@ Painel do banco local (Supabase Studio): <http://127.0.0.1:54323>.
 | `npm run test:db` | Testes do banco: isolamento entre empresas (RLS) e conclusão de OS |
 | `npm run test:e2e` | Testes ponta a ponta no navegador (Playwright) |
 | `npm run build` | Build de produção |
-| `npm run deploy:supabase` · `npm run deploy:vercel` | Publicação (ver abaixo) |
+| `npm run publicar` | Publicação completa em produção (ver abaixo) |
 | `npm run empresa:nova` | Cadastra uma nova loja cliente (ver abaixo) |
 
 O GitHub Actions roda lint, tipos e testes unitários a cada push; em seguida sobe um Supabase descartável e
@@ -53,33 +53,26 @@ roda os testes de banco e os ponta a ponta.
 
 ## Publicar (Supabase + Vercel)
 
-Faça uma vez, na pasta do projeto. Detalhes de cada conta em [docs/PENDENCIAS.md](docs/PENDENCIAS.md).
+**Produção atual:** <https://orion-oficina.vercel.app> · banco Supabase `orion-oficina` (São Paulo).
 
-1. **Banco na nuvem**
-   ```bash
-   npx supabase login
-   npm run deploy:supabase
-   ```
-   Cria o projeto (região São Paulo), aplica as migrações, desativa o cadastro público de usuários e grava
-   URL, chaves e segredos gerados em `.env.producao` (arquivo local, fora do Git — guarde uma cópia num cofre de senhas).
-   Para usar um projeto que já existe: `SUPABASE_PROJECT_REF=<ref> SUPABASE_DB_PASSWORD=<senha> npm run deploy:supabase`.
+Um comando faz tudo, só por HTTPS e sem login interativo:
 
-2. **Site na Vercel**
-   ```bash
-   npx vercel login
-   npm run deploy:vercel
-   ```
-   Cria/vincula o projeto, cadastra as variáveis de ambiente e publica em produção.
+```bash
+SUPABASE_ACCESS_TOKEN=sbp_...  VERCEL_TOKEN=...  VERCEL_SCOPE=orion-automacao  npm run publicar
+```
 
-3. **Sincronização fiscal a cada 10 minutos** — no GitHub: *Settings › Secrets and variables › Actions ›
-   New repository secret*, crie `APP_URL` (endereço do sistema) e `CRON_SECRET` (copie do `.env.producao`).
-   A Vercel (plano gratuito) roda a rotina diária; a de 10 minutos fica no GitHub Actions.
+- Tokens: <https://supabase.com/dashboard/account/tokens> e <https://vercel.com/account/settings/tokens>
+  (use validade curta e apague depois).
+- O script usa o projeto Supabase `orion-oficina` (ou cria, se a conta permitir), aplica só as migrações novas,
+  desliga o cadastro público, cadastra as variáveis na Vercel, publica, detecta o endereço definitivo (republica se mudar),
+  agenda a sincronização fiscal a cada 10 minutos dentro do banco (pg_cron + pg_net, segredo no Vault) e testa o site.
+- Os valores ficam em `.env.producao` (fora do Git). **Guarde uma cópia num cofre de senhas**: rodar de novo sem ele
+  gera chaves novas e os CSCs já salvos pelas lojas deixariam de abrir.
+- `npm run publicar:banco` faz só a parte do banco. Rodar de novo é seguro.
+- **Emissão fiscal real:** preencha `FISCAL_CLIENT_ID` e `FISCAL_CLIENT_SECRET` no `.env.producao` e rode `npm run publicar`.
 
-4. **Emissão fiscal real** — com a conta da ACBr API, preencha `FISCAL_CLIENT_ID` e `FISCAL_CLIENT_SECRET`
-   no `.env.producao` e rode `npm run deploy:vercel` de novo.
-
-Atualizações futuras: `git push` (a Vercel publica sozinha se o repositório estiver conectado em
-*Vercel › Project › Settings › Git*) e `npm run deploy:supabase` quando houver migrações novas.
+Alternativa com login interativo no seu computador: `npm run deploy:supabase` e `npm run deploy:vercel`
+(scripts em bash; exigem conexão direta ao Postgres, `jq` e `openssl`).
 
 ---
 
