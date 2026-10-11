@@ -7,7 +7,7 @@
 
 Endereço: <http://localhost:3000> — senha de todos: **`Demo@2026`**
 
-## Loja 1 — Prime Películas e Acessórios Automotivos (Porto Alegre/RS)
+## Loja 1 — Loja Demonstração (Porto Alegre/RS)
 
 | Papel | E-mail | O que pode fazer |
 |---|---|---|

@@ -5,14 +5,14 @@
  */
 
 export const EMPRESA_DEMO = {
-  razao_social: "Prime Películas e Acessórios Automotivos LTDA",
-  nome_fantasia: "Prime Películas",
+  razao_social: "Loja Demonstração LTDA",
+  nome_fantasia: "Loja Demonstração",
   cnpj_base: "457812630001", // DV calculado no seed
   inscricao_estadual: "0962574811",
   inscricao_municipal: "52731409",
   regime_tributario: "simples_nacional" as const,
   cnae: "4530-7/05",
-  email: "contato@primepeliculas.com.br",
+  email: "contato@demo.orion.app",
   telefone: "5133447788",
   whatsapp: "51998765432",
   cep: "91010003",

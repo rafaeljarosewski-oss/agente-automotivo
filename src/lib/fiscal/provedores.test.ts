@@ -7,8 +7,8 @@ import type { PedidoEmissao } from "./tipos";
 
 const emitente: PedidoEmissao["emitente"] = {
   cnpj: "11222333000181",
-  razao_social: "Prime Películas LTDA",
-  nome_fantasia: "Prime Películas",
+  razao_social: "Loja Demonstração LTDA",
+  nome_fantasia: "Loja Demonstração",
   inscricao_estadual: "0961234567",
   inscricao_municipal: "1234567",
   regime: "simples_nacional",
