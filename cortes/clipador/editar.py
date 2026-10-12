@@ -47,7 +47,10 @@ def _probe(video: Path) -> tuple[int, int, float]:
 
 def _tomadas(ini: float, fim: float, ws: list[dict]) -> list[tuple[float, float]]:
     """Trechos de fala dentro de [ini, fim], já sem as pausas longas e quebrados em tomadas curtas."""
-    ws = [w for w in ws if w["end"] > ini and w["start"] < fim]
+    # o trecho manda em quais palavras entram; a tomada cobre a palavra inteira,
+    # sem invadir a palavra vizinha que ficou de fora
+    todas = ws
+    ws = [w for w in todas if _no_trecho(w, ini, fim)]
     if not ws:  # sem fala (só música): mantém tudo, mas troca o zoom a cada TOMADA_MAX
         n = max(1, round((fim - ini) / TOMADA_MAX))
         passo = (fim - ini) / n
@@ -61,8 +64,14 @@ def _tomadas(ini: float, fim: float, ws: list[dict]) -> list[tuple[float, float]
 
     tomadas: list[tuple[float, float]] = []
     for b in blocos:
-        a = max(ini, b[0]["start"] - FOLGA_ANTES)
-        z = min(fim, b[-1]["end"] + FOLGA_DEPOIS)
+        a = max(0.0, b[0]["start"] - FOLGA_ANTES)
+        z = b[-1]["end"] + FOLGA_DEPOIS
+        antes = [w["end"] for w in todas if w["end"] <= b[0]["start"] and not _no_trecho(w, ini, fim)]
+        depois = [w["start"] for w in todas if w["start"] >= b[-1]["end"] and not _no_trecho(w, ini, fim)]
+        if antes:
+            a = max(a, min(b[0]["start"], max(antes) + 0.02))
+        if depois:
+            z = min(z, max(b[-1]["end"], min(depois) - 0.02))
         # quebra blocos longos na maior pausa disponível perto de TOMADA_MAX
         inicio_atual = a
         for i in range(1, len(b)):
@@ -78,6 +87,10 @@ def _tomadas(ini: float, fim: float, ws: list[dict]) -> list[tuple[float, float]
         a, z = tomadas[i]
         tomadas[i] = (max(a, tomadas[i - 1][1]), z)
     return [(a, z) for a, z in tomadas if z - a > 0.2]
+
+
+def _no_trecho(w: dict, ini: float, fim: float) -> bool:
+    return ini - 0.15 <= w["start"] < fim
 
 
 def _mapear(t: float, tomadas: list[tuple[float, float]]) -> float | None:
@@ -197,15 +210,23 @@ def renderizar(video: Path, transcricao: list[dict], corte: dict, saida: Path,
     # um corte pode juntar vários trechos do mesmo vídeo ("trechos": [[a, b], [c, d]])
     trechos = corte.get("trechos") or [[corte["inicio"], corte["fim"]]]
     trechos = [(max(0.0, float(a)), min(dur_fonte, float(b))) for a, b in trechos]
-    ini, fim = min(a for a, _ in trechos), max(b for _, b in trechos)
     tomadas = [t for a, b in trechos for t in _tomadas(a, b, palavras(transcricao))]
+    for i in range(1, len(tomadas)):  # trechos colados não podem repetir imagem
+        tomadas[i] = (max(tomadas[i][0], tomadas[i - 1][1]), tomadas[i][1])
+    tomadas = [(a, min(z, dur_fonte)) for a, z in tomadas if min(z, dur_fonte) - a > 0.2]
+    ini, fim = tomadas[0][0], max(z for _, z in tomadas)
     duracao = sum(z - a for a, z in tomadas)
 
     ws_map = []
     for wd in palavras(transcricao):
-        a, z = _mapear(wd["start"], tomadas), _mapear(min(wd["end"], fim), tomadas)
-        if a is not None and z is not None and z > a:
-            ws_map.append({**wd, "start": a, "end": z})
+        if not any(_no_trecho(wd, a, b) for a, b in trechos):
+            continue
+        a = _mapear(wd["start"], tomadas)
+        if a is None:
+            continue
+        z = _mapear(wd["end"], tomadas)
+        z = z if z is not None and z > a else a + min(wd["end"] - wd["start"], 0.5)
+        ws_map.append({**wd, "start": a, "end": z})
 
     mudos = [(w["start"] - 0.03, w["end"] + 0.03) for w in ws_map if _palavrao(w["word"])]
 
