@@ -1,0 +1,6 @@
+yt-dlp[default,curl-cffi]>=2026.8.19
+gdown>=5.2
+faster-whisper>=1.1
+anthropic>=1.13
+pydantic>=2.8
+requests>=2.32

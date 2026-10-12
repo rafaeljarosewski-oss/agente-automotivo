@@ -1,0 +1,40 @@
+{
+  "nome": "Rafael Cabral - Outubro",
+  "influenciador": "Rafael Cabral",
+  "periodo": { "inicio": "2026-10-10", "fim": "2026-11-09" },
+  "horario_limite_envio": "20:00",
+  "hashtags": ["#rafaelcabralcy", "#mjmusiccy"],
+  "mencoes": {
+    "instagram": "@rafael_cabral",
+    "tiktok": "@rafael_cabral4",
+    "youtube": null
+  },
+  "objetivo": "Fortalecer a imagem do Rafael Cabral, destacar trajetória e carreira, gerar autoridade e reconhecimento, contribuir para o crescimento saudável da marca e criar impacto positivo nas redes.",
+  "proibido": [
+    "comparações entre artistas",
+    "rivalidades artificiais",
+    "polêmicas fora de contexto",
+    "sensacionalismo",
+    "ataques a profissionais do mercado",
+    "política e temas ideológicos"
+  ],
+  "regra_principal": "Esse corte fortalece ou enfraquece a imagem do Rafael Cabral? Se enfraquecer, não publique.",
+  "criterios": [
+    "contexto",
+    "qualidade da edição",
+    "harmonia visual",
+    "música utilizada",
+    "retenção",
+    "potencial de engajamento",
+    "fortalecimento da imagem do Rafael Cabral"
+  ],
+  "fontes": [
+    { "id": "tt_ZSbpPN6gk", "url": "https://vt.tiktok.com/ZSbpPN6gk/" },
+    { "id": "tt_ZSbRpaSCC", "url": "https://vt.tiktok.com/ZSbRpaSCC/" },
+    { "id": "tt_ZSbRpmkQw", "url": "https://vt.tiktok.com/ZSbRpmkQw/" },
+    { "id": "drive_pasta", "url": "https://drive.google.com/drive/folders/1JBRaW_F09E9DNxtMu3EmKJxZtDEP9CD4" },
+    { "id": "yt_tA0aQ6PMfgM", "url": "https://www.youtube.com/watch?v=tA0aQ6PMfgM" },
+    { "id": "yt__IAuBs-O43o", "url": "https://www.youtube.com/watch?v=_IAuBs-O43o" },
+    { "id": "yt_lUpGSPZVLA4", "url": "https://www.youtube.com/watch?v=lUpGSPZVLA4" }
+  ]
+}

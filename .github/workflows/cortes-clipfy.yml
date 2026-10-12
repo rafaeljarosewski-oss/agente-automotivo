@@ -1,0 +1,98 @@
+# Publica automaticamente os cortes da campanha Clipfy no canal do YouTube (cortes/README.md).
+# Roda 2x por dia antes das 20h de Brasília (envios até 20h contam no ranking do dia).
+# Fica inativo até os segredos YT_CLIENT_ID, YT_CLIENT_SECRET e YT_REFRESH_TOKEN serem cadastrados;
+# ANTHROPIC_API_KEY (opcional) faz o Claude planejar cortes de fontes novas; YT_COOKIES (opcional)
+# permite baixar fontes do YouTube.
+name: Cortes Clipfy
+
+on:
+  schedule:
+    - cron: "47 14 * * *" # 11:47 em Brasília
+    - cron: "47 20 * * *" # 17:47 em Brasília
+  workflow_dispatch:
+    inputs:
+      quantidade:
+        description: "Quantos cortes publicar agora"
+        default: "1"
+
+concurrency:
+  group: cortes-clipfy
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: cortes
+    env:
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - name: Verificar segredos
+        id: segredos
+        working-directory: .
+        run: |
+          if [ -z "$YT_CLIENT_ID" ] || [ -z "$YT_CLIENT_SECRET" ] || [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "Segredos do YouTube não cadastrados — nada a fazer."
+            echo "ativo=nao" >> "$GITHUB_OUTPUT"
+          else
+            echo "ativo=sim" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.segredos.outputs.ativo == 'sim'
+
+      - uses: actions/setup-python@v5
+        if: steps.segredos.outputs.ativo == 'sim'
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: cortes/requirements.txt
+
+      - name: Instalar ffmpeg e dependências
+        if: steps.segredos.outputs.ativo == 'sim'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q -r requirements.txt
+
+      - name: Cache dos vídeos-fonte e do modelo de transcrição
+        if: steps.segredos.outputs.ativo == 'sim'
+        uses: actions/cache@v4
+        with:
+          path: |
+            cortes/trabalho/fontes
+            ~/.cache/huggingface
+          key: cortes-fontes-${{ hashFiles('cortes/campanha.json') }}
+          restore-keys: cortes-fontes-
+
+      - name: Cookies do YouTube (opcional)
+        if: steps.segredos.outputs.ativo == 'sim'
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: |
+          if [ -n "$YT_COOKIES" ]; then
+            printf '%s' "$YT_COOKIES" > "$RUNNER_TEMP/yt_cookies.txt"
+            echo "YT_COOKIES_ARQ=$RUNNER_TEMP/yt_cookies.txt" >> "$GITHUB_ENV"
+          fi
+
+      - name: Baixar, transcrever, planejar e publicar
+        if: steps.segredos.outputs.ativo == 'sim'
+        run: python -m clipador diario -n "${{ github.event.inputs.quantidade || '1' }}"
+
+      - name: Guardar estado (publicados, planos e transcrições)
+        if: always() && steps.segredos.outputs.ativo == 'sim'
+        run: |
+          git config user.name "cortes-bot"
+          git config user.email "cortes-bot@users.noreply.github.com"
+          git add estado planos transcricoes
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Cortes Clipfy: atualiza publicados e planos"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          exit 1
