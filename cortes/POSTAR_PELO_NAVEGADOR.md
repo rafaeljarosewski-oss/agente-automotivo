@@ -1,92 +1,149 @@
-# Postar os cortes pelo navegador (Brave + extensão do Claude)
+# Postar os cortes pelo Brave (passo a passo detalhado)
 
-É o mesmo esquema do canal do Rombo: o Claude Code roda **no seu computador** e controla o
-**seu Brave**, que já está logado no YouTube, TikTok e Instagram. Não precisa de API, chave nem
-auditoria, e o vídeo sai público na hora.
+O Claude Code roda no seu computador e controla o seu Brave, que já está logado nas redes.
+O comando se chama `claude --chrome` e a extensão se chama "Claude in Chrome", mas são só
+nomes: funcionam no Brave, que é feito sobre o Chrome. A documentação oficial lista o Brave como
+compatível.
 
-## Uma vez só (preparação)
+Os passos abaixo são para Windows. No Mac, troque "PowerShell" por "Terminal" e use os comandos
+indicados como "(Mac)".
 
-1. **Brave logado nas contas certas**
-   - YouTube: entre em <https://studio.youtube.com> e confira se o canal selecionado é o
-     **cortou.bombou** (foto do perfil → *Trocar de conta*).
-   - TikTok: <https://www.tiktok.com/upload> abrindo logado na conta onde vai postar.
-   - Instagram: <https://www.instagram.com> logado na conta onde vai postar.
-   - Clipfy: logado na campanha "Rafael Cabral - Outubro".
+---
 
-2. **Extensão do Claude no Brave**
-   - Em `brave://extensions` confirme que a extensão **Claude** está instalada e **ativada**
-     (versão 1.0.36 ou mais nova).
-   - Abra a extensão e confira se está logada na **mesma conta e organização** do Claude Code.
+## PARTE 1: preparar o Brave (uma vez só, uns 5 minutos)
 
-3. **Claude Code atualizado e logado**
-   - No terminal (PowerShell no Windows, Terminal no Mac): `claude --version`. Se estiver antigo,
-     atualize com `claude update`.
-   - Se você usa chave de API no Claude Code, a integração com o navegador não liga. Entre com
-     `/login` usando a conta do claude.ai.
+### 1.1 Conferir a extensão do Claude
+1. Abra o Brave.
+2. Na barra de endereço, digite `brave://extensions` e aperte Enter.
+3. Procure o card **Claude**. A chavinha no canto de baixo do card tem que estar **ligada (azul)**.
+4. Ainda nesse card, clique em **Detalhes** e confira **Versão: 1.0.36 ou maior**.
+   - Se for menor: ligue o **Modo do desenvolvedor** (chave no canto superior direito) e
+     clique em **Atualizar**.
+5. Clique no ícone de quebra-cabeça (🧩) à direita da barra de endereço e no **alfinete** ao lado
+   de "Claude", para o ícone do Claude ficar sempre visível.
+6. Clique no ícone do Claude e confira se está logado com o **mesmo e-mail** que você usa no
+   claude.ai.
 
-4. **Projeto no seu computador**
-   - Se ainda não tem a pasta:
-     ```
-     git clone https://github.com/rafaeljarosewski-oss/agente-automotivo.git
-     cd agente-automotivo
-     ```
-   - Pegue o código dos cortes:
-     ```
-     git fetch origin claude/vigilant-euler-63gtd9
-     git checkout claude/vigilant-euler-63gtd9
-     ```
+### 1.2 Deixar as contas logadas no Brave
+Abra cada link numa aba e confira se já entra logado. Se pedir login, faça agora.
+1. `https://studio.youtube.com`: clique na sua foto (canto superior direito) → **Trocar de
+   conta** → escolha o canal **cortou.bombou**. O nome do canal tem que aparecer no menu da
+   esquerda.
+2. `https://www.tiktok.com/upload`: tem que abrir a tela "Carregar vídeo", sem pedir login.
+3. `https://www.instagram.com`: tem que abrir o feed, sem pedir login.
+4. Site da Clipfy: entre na campanha **Rafael Cabral - Outubro** e veja se o botão
+   **+ Enviar Post** aparece.
 
-5. **Vídeos na pasta certa**
-   - Crie a pasta `cortes/trabalho/postar/` e salve nela os vídeos `.mp4` "para postar" que o
-     Claude te mandou (todos com menos de 10 MB, que é o limite de upload pelo navegador).
-   - Alternativa: peça ao Claude na sessão local "instala ffmpeg e Python e roda
-     `python -m clipador baixar` e `python -m clipador renderizar` dentro de `cortes/`", e ele
-     gera tudo de novo no seu computador.
+---
 
-## Toda vez que for postar
+## PARTE 2: preparar a pasta com os vídeos (uma vez só)
 
-1. Deixe o **Brave aberto**.
-2. No terminal, dentro da pasta `agente-automotivo`, rode:
+1. Abra o **Explorador de Arquivos** e entre em **Documentos**.
+2. Clique com o botão direito → **Novo** → **Pasta** e dê o nome **cortes-rafael**.
+3. Baixe para dentro dessa pasta os **14 vídeos .mp4** que o Claude mandou no chat (versão
+   "para postar", cada um com menos de 10 MB) e o arquivo **ROTEIRO_DE_POSTAGEM.md**.
+4. No fim, a pasta tem 15 arquivos, por exemplo:
+   ```
+   Documentos\cortes-rafael\
+     ROTEIRO_DE_POSTAGEM.md
+     tt_ZSbRpaSCC_01.mp4
+     tt_ZSbRpmkQw_01.mp4
+     ... (14 vídeos)
+   ```
+   Não renomeie os vídeos: o roteiro usa esses nomes.
+
+---
+
+## PARTE 3: instalar o Claude Code (pule se já usa no canal do Rombo)
+
+1. Aperte a tecla **Windows**, digite **PowerShell** e abra o **Windows PowerShell**.
+2. Cole e aperte Enter:
+   ```
+   irm https://claude.ai/install.ps1 | iex
+   ```
+   (Mac) `curl -fsSL https://claude.ai/install.sh | bash`
+3. Feche o PowerShell e abra de novo.
+4. Digite `claude --version` e aperte Enter. Tem que aparecer um número de versão.
+   - Se já tinha instalado: rode `claude update` para atualizar.
+
+---
+
+## PARTE 4: postar (sempre que for postar)
+
+### 4.1 Abrir o Claude Code na pasta dos vídeos
+1. Deixe o **Brave aberto** (pode ser minimizado).
+2. Abra o **PowerShell**.
+3. Entre na pasta (cole e aperte Enter):
+   ```
+   cd "$HOME\Documents\cortes-rafael"
+   ```
+   (Mac) `cd ~/Documents/cortes-rafael`
+4. Inicie o Claude com acesso ao navegador:
    ```
    claude --chrome
    ```
-   Na primeira vez aparece uma tela explicando a integração: aperte **Enter**.
-3. Digite `/chrome` e confira **Status: Enabled** e **Extension: Installed**. Se tiver mais de
-   um navegador, escolha **Select browser… → Brave**.
-   - Se aparecer "Not detected": feche e abra o Brave de novo (na primeira vez ele precisa
-     reiniciar para enxergar o Claude Code) e rode `/chrome` → **Reconnect extension**.
-   - Para não precisar do `--chrome` toda vez: `/chrome` → **Enabled by default**.
-4. Cole o prompt abaixo.
-5. Quando aparecer **"Claude in Chrome wants to…"**, aprove e marque para permitir aquele site
-   durante a sessão (YouTube, TikTok, Instagram e Clipfy).
-6. Se algum site pedir login, código ou CAPTCHA, o Claude para e te chama: resolva no Brave e
-   diga "continua".
+5. Se perguntar **"Do you trust the files in this folder?"**, escolha **Yes**.
+6. Na primeira vez aparece uma tela explicando a integração com o navegador: aperte **Enter**.
+7. Se pedir login, digite `/login`, aperte Enter e entre com a conta do claude.ai (a mesma da
+   extensão). Não use chave de API: com ela a integração com o navegador não liga.
 
-## Prompt para colar
+### 4.2 Conferir a conexão com o Brave
+1. Digite `/chrome` e aperte Enter.
+2. Tem que aparecer:
+   - **Status: Enabled**
+   - **Extension: Installed**
+3. Se aparecer **Select browser…**, entre nele e escolha **Brave**.
+4. Escolha **Enabled by default**, para não precisar digitar `--chrome` nas próximas vezes.
+5. Aperte **Esc** para sair do menu.
+
+**Se der "Not detected" ou "Not connected":**
+- Feche o Brave por completo (inclusive o ícone perto do relógio) e abra de novo. Na primeira vez
+  isso é obrigatório: o Brave só enxerga o Claude Code depois de reiniciar.
+- Volte ao PowerShell, digite `/chrome` → **Reconnect extension**.
+- Ainda não foi? Em `brave://extensions`, desligue e ligue a extensão Claude e repita o
+  `/chrome` → **Reconnect extension**.
+
+### 4.3 Mandar postar
+Cole este texto no Claude e aperte Enter:
 
 ```
-Leia cortes/ROTEIRO_DE_POSTAGEM.md e cortes/estado/publicados.json (se não existir, nada foi
-postado ainda).
-Pegue os próximos 2 cortes do roteiro que ainda não estão em publicados.json e, para cada um,
-usando o vídeo de cortes/trabalho/postar/<id>.mp4, poste pelo meu navegador:
+Leia ROTEIRO_DE_POSTAGEM.md e publicados.txt nesta pasta (se publicados.txt não existir, nada
+foi postado ainda). Pegue os próximos 2 cortes do roteiro que ainda não estão em publicados.txt
+e, para cada um, usando o arquivo <id>.mp4 desta pasta, poste pelo meu navegador:
 
-1. YouTube (studio.youtube.com, canal cortou.bombou): Criar → Enviar vídeos. Título e descrição
-   exatamente como no roteiro. "Não, não é conteúdo para crianças". Visibilidade: Pública.
-2. TikTok (tiktok.com/upload): legenda exatamente como no roteiro, começando por @rafael_cabral4.
-   Comentários permitidos. Público.
-3. Instagram (instagram.com → Criar → Post, sai como Reel): legenda exatamente como no roteiro,
-   começando por @rafael_cabral. Compartilhar.
+1. YouTube (studio.youtube.com, canal cortou.bombou): Criar → Enviar vídeos → selecione o
+   arquivo. Título e descrição exatamente como no roteiro. Público-alvo: "Não, não é conteúdo
+   para crianças". Avance até Visibilidade e marque Pública → Publicar.
+2. TikTok (tiktok.com/upload): selecione o arquivo, legenda exatamente como no roteiro (começa
+   com @rafael_cabral4), "Quem pode ver": Todos, comentários permitidos → Publicar.
+3. Instagram (instagram.com → Criar → Post): selecione o arquivo, mantenha 9:16, legenda
+   exatamente como no roteiro (começa com @rafael_cabral) → Compartilhar.
 
-Regras: a marcação (@) tem que ser a primeira coisa da legenda; não mude as hashtags; poste antes
-das 20h de Brasília; não deixe curtidas ocultas.
-Depois de cada post, copie o link e envie na Clipfy (campanha "Rafael Cabral - Outubro" → Enviar
-Post). Ao final, registre em cortes/estado/publicados.json o id do corte, a data e os 3 links, e
-me mostre um resumo.
+Regras: a marcação (@) tem que ser a primeira coisa da legenda; não mude hashtags; não oculte
+curtidas.
+Depois de cada post, copie o link e envie na Clipfy (campanha "Rafael Cabral - Outubro" →
+Enviar Post → plataforma certa → cole o link).
+No fim, acrescente em publicados.txt uma linha por corte com: id, data e hora, link do YouTube,
+link do TikTok, link do Instagram. Me mostre um resumo.
 ```
 
-## Dicas
+### 4.4 Enquanto ele trabalha
+- Vai aparecer **"Claude in Chrome wants to…"** no PowerShell. Escolha a opção de **permitir
+  esse site durante a sessão** (aparece uma vez para YouTube, TikTok, Instagram e Clipfy).
+- O Brave abre um grupo de abas novas e você vê o Claude clicando e preenchendo. Não mexa
+  nessas abas enquanto ele trabalha.
+- Se aparecer login, código por SMS ou CAPTCHA, o Claude para e avisa. Resolva no Brave e
+  digite **continua** no PowerShell.
+- Se uma janela de alerta do site travar a página, feche o alerta e digite **continua**.
 
-- O ranking da Clipfy é diário e considera envios até as 20h: 2 cortes por dia rende mais do
-  que postar todos de uma vez.
-- Para rodar todo dia sem você digitar: deixe o computador ligado com o Brave aberto e use as
-  tarefas agendadas do app Claude Desktop ou da extensão, com o mesmo prompt.
+### 4.5 Ao terminar
+- Confira os links no resumo e no arquivo `publicados.txt`.
+- Para sair do Claude: digite `/exit`.
+
+---
+
+## Rotina diária
+- Os envios até as **20h** contam no ranking do dia. Rode o 4.1 e o 4.3 uma vez por dia, de
+  preferência de manhã ou no começo da tarde.
+- São 2 cortes por dia: os 14 cortes rendem 7 dias. Quando acabarem, peça novos cortes ao Claude
+  com conteúdo novo do Rafael.
