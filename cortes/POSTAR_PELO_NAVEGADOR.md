@@ -65,8 +65,8 @@ auditoria, e o vídeo sai público na hora.
 ## Prompt para colar
 
 ```
-Leia cortes/trabalho/renderizados/ROTEIRO_DE_POSTAGEM.md (se não existir, gere as legendas com
-python -m clipador renderizar dentro de cortes/) e cortes/estado/publicados.json.
+Leia cortes/ROTEIRO_DE_POSTAGEM.md e cortes/estado/publicados.json (se não existir, nada foi
+postado ainda).
 Pegue os próximos 2 cortes do roteiro que ainda não estão em publicados.json e, para cada um,
 usando o vídeo de cortes/trabalho/postar/<id>.mp4, poste pelo meu navegador:
 
