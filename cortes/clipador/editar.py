@@ -11,6 +11,7 @@ Vídeo horizontal vira vertical com fundo desfocado do próprio vídeo.
 """
 
 import json
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -295,4 +296,23 @@ def renderizar(video: Path, transcricao: list[dict], corte: dict, saida: Path,
         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", str(saida),
     ]
     subprocess.run(cmd, check=True)
+    return saida
+
+
+def versao_para_postar(entrada: Path, saida: Path, limite_mb: float = 9.5) -> Path:
+    """Cópia com menos de 10 MB: é o máximo que a extensão do navegador consegue enviar por upload."""
+    if entrada.stat().st_size <= limite_mb * 1024 * 1024:
+        saida.parent.mkdir(parents=True, exist_ok=True)
+        saida.write_bytes(entrada.read_bytes())
+        return saida
+    dur = _probe(entrada)[2]
+    audio_k = 128
+    video_k = int(limite_mb * 8 * 1024 * 0.97 / dur) - audio_k
+    escala = [] if video_k >= 2500 else ["-vf", "scale=720:1280:flags=lanczos"]
+    log = str(TEMP / f"{saida.stem}_2pass")
+    comum = ["-c:v", "libx264", "-preset", "slow", "-b:v", f"{video_k}k", *escala, "-passlogfile", log]
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(entrada), *comum, "-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)
+    saida.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(entrada), *comum, "-pass", "2",
+                    "-c:a", "aac", "-b:a", f"{audio_k}k", "-movflags", "+faststart", str(saida)], check=True)
     return saida

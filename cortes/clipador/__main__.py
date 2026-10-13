@@ -18,7 +18,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from . import legendas, youtube
-from .config import ESTADO, PLANOS, RENDERIZADOS, VIDEOS_FONTE, campanha, garantir_pastas, gravar_json, ler_json
+from .config import ESTADO, PARA_POSTAR, PLANOS, RENDERIZADOS, VIDEOS_FONTE, campanha, garantir_pastas, gravar_json, ler_json
 
 FUSO = ZoneInfo("America/Sao_Paulo")
 
@@ -83,6 +83,11 @@ def _renderizar(corte: dict) -> Path:
         print(f"- renderizando {corte['id']}")
         renderizar(VIDEOS_FONTE / f"{corte['fonte']}.mp4", transcricao_de(corte["fonte"]) or [], corte, saida,
                    rotulo=campanha()["influenciador"])
+    from .editar import versao_para_postar
+
+    postar = PARA_POSTAR / f"{corte['id']}.mp4"
+    if not postar.exists():
+        versao_para_postar(saida, postar)
     textos = legendas.todas(corte)
     (RENDERIZADOS / f"{corte['id']}.txt").write_text(
         f"YOUTUBE — título:\n{textos['youtube']['titulo']}\n\nYOUTUBE — descrição:\n{textos['youtube']['descricao']}\n\n"

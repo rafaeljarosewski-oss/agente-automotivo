@@ -15,6 +15,7 @@ ESTADO = RAIZ / "estado" / "publicados.json"
 TRABALHO = Path(os.environ.get("CORTES_TRABALHO", RAIZ / "trabalho"))
 VIDEOS_FONTE = TRABALHO / "fontes"
 RENDERIZADOS = TRABALHO / "renderizados"
+PARA_POSTAR = TRABALHO / "postar"  # cópias < 10 MB para subir pelo navegador
 TEMP = TRABALHO / "tmp"
 
 LARGURA, ALTURA, FPS = 1080, 1920, 30

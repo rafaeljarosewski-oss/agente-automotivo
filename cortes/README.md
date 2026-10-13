@@ -69,7 +69,13 @@ Fontes do YouTube: servidores em nuvem são bloqueados pelo YouTube ("confirme q
 Para baixá-las no GitHub Actions, exporte os cookies do navegador logado (extensão
 "Get cookies.txt LOCALLY") e cadastre o conteúdo no segredo `YT_COOKIES`.
 
-## TikTok e Instagram
+## Postar pelo navegador (sem API)
+
+Veja [POSTAR_PELO_NAVEGADOR.md](POSTAR_PELO_NAVEGADOR.md): Brave + extensão do Claude, posta nas 3
+redes sem chaves nem auditoria. O `renderizar` também gera cópias com menos de 10 MB em
+`trabalho/postar/` (limite de upload pelo navegador).
+
+## TikTok e Instagram pela API
 
 Os cortes e as legendas já saem prontos para as duas redes. A publicação automática exige:
 
