@@ -1,16 +1,25 @@
 {
   "nome": "Rafael Cabral - Outubro",
   "influenciador": "Rafael Cabral",
-  "periodo": { "inicio": "2026-10-10", "fim": "2026-11-09" },
+  "periodo": {
+    "inicio": "2026-10-10",
+    "fim": "2026-11-09"
+  },
   "horario_limite_envio": "20:00",
-  "hashtags": ["#rafaelcabralcy", "#mjmusiccy"],
+  "hashtags": [
+    "#rafaelcabralcy",
+    "#mjmusiccy"
+  ],
   "mencoes": {
-    "instagram": "@rafael_cabral",
-    "tiktok": "@rafael_cabral4",
+    "instagram": "@rafael_cabral @mclivao @priscilacarolynneofc",
+    "tiktok": "@rafael_cabral.mj",
     "youtube": null
   },
   "objetivo": "Fortalecer a imagem do Rafael Cabral, destacar trajetória e carreira, gerar autoridade e reconhecimento, contribuir para o crescimento saudável da marca e criar impacto positivo nas redes.",
   "proibido": [
+    "Thiago Viana",
+    "Projeto Balaio",
+    "qualquer artista que não seja MC Livinho ou Priscila Carolynne",
     "comparações entre artistas",
     "rivalidades artificiais",
     "polêmicas fora de contexto",
@@ -29,12 +38,14 @@
     "fortalecimento da imagem do Rafael Cabral"
   ],
   "fontes": [
-    { "id": "tt_ZSbpPN6gk", "url": "https://vt.tiktok.com/ZSbpPN6gk/" },
-    { "id": "tt_ZSbRpaSCC", "url": "https://vt.tiktok.com/ZSbRpaSCC/" },
-    { "id": "tt_ZSbRpmkQw", "url": "https://vt.tiktok.com/ZSbRpmkQw/" },
-    { "id": "drive_pasta", "url": "https://drive.google.com/drive/folders/1JBRaW_F09E9DNxtMu3EmKJxZtDEP9CD4" },
-    { "id": "yt_tA0aQ6PMfgM", "url": "https://www.youtube.com/watch?v=tA0aQ6PMfgM" },
-    { "id": "yt__IAuBs-O43o", "url": "https://www.youtube.com/watch?v=_IAuBs-O43o" },
-    { "id": "yt_lUpGSPZVLA4", "url": "https://www.youtube.com/watch?v=lUpGSPZVLA4" }
-  ]
+    {
+      "id": "livinho",
+      "url": "https://drive.google.com/drive/folders/1AKOLVZdMuGLdnu8sV8Tm-J40R4hz3nnZ"
+    },
+    {
+      "id": "livinho_reel",
+      "url": "https://www.instagram.com/reel/Dekx57gC90R/"
+    }
+  ],
+  "direcionamento": "Somente MC Livinho e Priscila Carolynne (casting do Rafael Cabral na MJ Music). Narrativa: 'Incrível como a gente nunca consegue imaginar o próximo passo do Rafael Cabral!'. Estilo notícia e fofoca, headlines fortes que geram curiosidade sobre o próximo passo do Rafael Cabral."
 }

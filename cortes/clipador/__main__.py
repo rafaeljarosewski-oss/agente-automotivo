@@ -4,6 +4,7 @@
   python -m clipador transcrever            # transcreve o que ainda não tem transcrição
   python -m clipador planejar [--refazer]   # Claude escolhe os melhores momentos (planos/*.json)
   python -m clipador renderizar [ids...]    # gera os vídeos + legendas em trabalho/renderizados
+  python -m clipador roteiro                # ROTEIRO_DE_POSTAGEM.md com as legendas de cada rede
   python -m clipador publicar [-n 1]        # envia o próximo corte inédito ao YouTube
   python -m clipador diario                 # tudo acima, em sequência (usado no agendamento)
   python -m clipador autorizar-youtube client_secret.json
@@ -108,6 +109,27 @@ def cmd_renderizar(args):
         print(f"  ok {_renderizar(c)}")
 
 
+def cmd_roteiro(_):
+    """Gera ROTEIRO_DE_POSTAGEM.md com os cortes ativos, do maior para o menor potencial."""
+    from .config import RAIZ
+
+    cortes = sorted(_todos_cortes(), key=lambda k: -k.get("nota", 0))
+    c = campanha()
+    linhas = [f"# Roteiro de postagem — {c['nome']}\n",
+              f"Direcionamento: {c.get('direcionamento', c['objetivo'])}\n",
+              "Poste antes das 20h (Brasília). A marcação (@) tem que ser a PRIMEIRA coisa da legenda.\n"]
+    for i, k in enumerate(cortes, 1):
+        t = legendas.todas(k)
+        linhas += [f"## {i}. {k['id']}.mp4 — nota {k.get('nota', '?')}/10",
+                   f"*Por que funciona:* {k.get('motivo', '')}\n",
+                   f"**YouTube — título:** {t['youtube']['titulo']}  ",
+                   f"**YouTube — descrição:**\n```\n{t['youtube']['descricao']}\n```",
+                   f"**TikTok:**\n```\n{t['tiktok']}\n```",
+                   f"**Instagram:**\n```\n{t['instagram']}\n```\n"]
+    (RAIZ / "ROTEIRO_DE_POSTAGEM.md").write_text("\n".join(linhas), encoding="utf-8")
+    print(f"  ok ROTEIRO_DE_POSTAGEM.md ({len(cortes)} cortes)")
+
+
 def cmd_publicar(args):
     c = campanha()
     hoje = dt.datetime.now(FUSO).date()
@@ -158,6 +180,7 @@ def main():
     sr = sub.add_parser("renderizar")
     sr.add_argument("ids", nargs="*")
     sr.set_defaults(f=cmd_renderizar)
+    sub.add_parser("roteiro").set_defaults(f=cmd_roteiro)
     for nome, func in (("publicar", cmd_publicar), ("diario", cmd_diario)):
         s = sub.add_parser(nome)
         s.add_argument("-n", type=int, default=1, help="quantos cortes publicar nesta execução")

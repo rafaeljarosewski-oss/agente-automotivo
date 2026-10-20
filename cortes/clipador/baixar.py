@@ -47,7 +47,14 @@ def _drive(url: str, fonte_id: str) -> list[Path]:
         if v.suffix.lower() == ".mp4":
             shutil.move(v, destino)
         else:
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(v), "-c", "copy", str(destino)], check=True)
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(v), "-map", "0:v:0", "-map", "0:a:0?",
+                            "-c", "copy", str(destino)], check=True)
+        saidas.append(destino)
+    # fotos da pasta viram <id>_foto_NN.jpg (usadas como B-roll nos cortes)
+    fotos = sorted(p for p in pasta.rglob("*") if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"})
+    for i, f in enumerate(fotos, 1):
+        destino = VIDEOS_FONTE / f"{fonte_id}_foto_{i:02d}.jpg"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(f), str(destino)], check=True)
         saidas.append(destino)
     shutil.rmtree(pasta, ignore_errors=True)
     return saidas
@@ -60,7 +67,7 @@ def baixar_tudo() -> list[Path]:
     for fonte in campanha()["fontes"]:
         fid, url = fonte["id"], fonte["url"]
         if "drive.google.com" in url:
-            if any(VIDEOS_FONTE.glob(f"{fid}*.mp4")):
+            if any(VIDEOS_FONTE.glob(f"{fid}_*.mp4")) or (VIDEOS_FONTE / f"{fid}.mp4").exists():
                 continue
             print(f"- {fid}: baixando do Google Drive")
             try:

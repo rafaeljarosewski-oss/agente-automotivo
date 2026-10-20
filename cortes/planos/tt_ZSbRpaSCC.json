@@ -3,48 +3,111 @@
   "cortes": [
     {
       "id": "tt_ZSbRpaSCC_01",
-      "trechos": [[374.2, 413.2], [416.4, 440.6]],
+      "trechos": [
+        [
+          374.2,
+          413.2
+        ],
+        [
+          416.4,
+          440.6
+        ]
+      ],
       "nota": 10,
       "gancho": "A ideia não é vender, é ensinar",
       "titulo": "Rafael Cabral: \"Minha ideia não é vender, é ensinar\"",
       "descricao": "Muita gente entende errado o que o Rafael Cabral faz nas redes. Ele explica o propósito: ensinar e abrir portas, sem interesse financeiro.",
-      "motivo": "Fala de propósito e autoridade, com apoio do Thiago Brava (prova social). Fortalece diretamente a imagem do Rafael."
+      "motivo": "Fala de propósito e autoridade, com apoio do Thiago Brava (prova social). Fortalece diretamente a imagem do Rafael.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpaSCC_02",
-      "trechos": [[220.0, 227.3], [314.9, 343.5], [345.4, 350.5]],
+      "trechos": [
+        [
+          220.0,
+          227.3
+        ],
+        [
+          314.9,
+          343.5
+        ],
+        [
+          345.4,
+          350.5
+        ]
+      ],
       "nota": 9,
       "gancho": "A vida é sobre isso",
       "titulo": "O abraço no aeroporto na véspera de réveillon",
       "descricao": "Thiago Brava conta como ele e o Rafael Cabral se reencontraram e a gratidão que ficou: a família dele tratava o Rafael como filho.",
-      "motivo": "História emocional de gratidão e amizade, com final forte. Começa no reencontro e não explora a briga (evita sensacionalismo)."
+      "motivo": "História emocional de gratidão e amizade, com final forte. Começa no reencontro e não explora a briga (evita sensacionalismo).",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpaSCC_03",
-      "trechos": [[714.3, 737.2], [739.5, 752.2]],
+      "trechos": [
+        [
+          714.3,
+          737.2
+        ],
+        [
+          739.5,
+          752.2
+        ]
+      ],
       "nota": 8,
       "gancho": "O erro que quebra artista de sucesso",
       "titulo": "O erro que quebra artista de sucesso",
       "descricao": "O artista se embriaga com o sucesso e esquece do financeiro. Por isso a clareza tem que vir desde o começo, e todo mundo ganha.",
-      "motivo": "Conteúdo de autoridade sobre gestão de carreira, com elogio direto ao jeito do Rafael trabalhar."
+      "motivo": "Conteúdo de autoridade sobre gestão de carreira, com elogio direto ao jeito do Rafael trabalhar.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpaSCC_04",
-      "trechos": [[100.4, 116.3], [121.2, 125.4]],
+      "trechos": [
+        [
+          100.4,
+          116.3
+        ],
+        [
+          121.2,
+          125.4
+        ]
+      ],
       "nota": 7,
       "gancho": "Como o Panda rompeu no Nordeste",
       "titulo": "Como o Panda rompeu no Nordeste",
       "descricao": "São João com shows lotados e portas abertas nas maiores festas: anos de luta para entrar no Nordeste.",
-      "motivo": "Conquista e bastidor de carreira do artista que o Rafael empresaria. Final com \"graças a Deus, rompeu\"."
+      "motivo": "Conquista e bastidor de carreira do artista que o Rafael empresaria. Final com \"graças a Deus, rompeu\".",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpaSCC_05",
-      "trechos": [[834.0, 838.0], [857.3, 869.0], [870.0, 877.4]],
+      "trechos": [
+        [
+          834.0,
+          838.0
+        ],
+        [
+          857.3,
+          869.0
+        ],
+        [
+          870.0,
+          877.4
+        ]
+      ],
       "nota": 6,
       "gancho": "O cara que o sertanejo subestima",
       "titulo": "Rafael Cabral sobre Thiago Brava: estratégico e marqueteiro",
       "descricao": "Rafael Cabral explica por que considera o Thiago Brava um dos caras mais estratégicos e com mais relacionamento do sertanejo.",
-      "motivo": "Mostra o network e o olhar de mercado do Rafael. Elogio sem comparação negativa."
+      "motivo": "Mostra o network e o olhar de mercado do Rafael. Elogio sem comparação negativa.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     }
   ]
 }

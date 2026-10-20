@@ -1,0 +1,71 @@
+{
+  "fonte": "livinho_01",
+  "cortes": [
+    {
+      "id": "livinho_01_01",
+      "trechos": [[3.1, 34.2]],
+      "nota": 10,
+      "selo": "Urgente",
+      "gancho": "Rafael Cabral fechou com o MC Livinho",
+      "titulo": "Rafael Cabral fechou com o MC Livinho na MJ Music",
+      "descricao": "Incrível como a gente nunca consegue imaginar o próximo passo do Rafael Cabral! MC Livinho é o novo artista do casting da MJ Music.",
+      "motivo": "Notícia direta com o momento da assinatura e a fala completa do Rafael."
+    },
+    {
+      "id": "livinho_01_02",
+      "trechos": [[3.1, 14.7], [14.8, 23.2]],
+      "nota": 10,
+      "selo": "Novidade na MJ Music",
+      "gancho": "Ninguém imagina o próximo passo do Rafael Cabral",
+      "broll": [
+        {"imagem": "livinho_foto_03.jpg", "de": 0.0, "ate": 3.2},
+        {"imagem": "livinho_foto_01.jpg", "de": 3.2, "ate": 6.0}
+      ],
+      "titulo": "Ninguém imagina o próximo passo do Rafael Cabral",
+      "descricao": "Um dos maiores empresários do sertanejo e o maior artista de funk do país na mesma mesa. MC Livinho agora é MJ Music.",
+      "motivo": "Usa a narrativa oficial da pauta no gancho e entrega a revelação (Livinho) no fim."
+    },
+    {
+      "id": "livinho_01_03",
+      "trechos": [[14.8, 29.8]],
+      "nota": 9,
+      "selo": "Rafael Cabral",
+      "gancho": "Não é sobre gênero, é sobre arte",
+      "titulo": "\"Não é sobre gênero, é sobre arte\": Rafael Cabral sobre o MC Livinho",
+      "descricao": "Rafael Cabral explica a parceria com o MC Livinho: não é sobre gênero, é sobre arte. O Brasil vai abraçar.",
+      "motivo": "Frase forte e citável do próprio Rafael, ótima para comentário e compartilhamento."
+    },
+    {
+      "id": "livinho_01_04",
+      "trechos": [[3.1, 12.0], [30.0, 34.2], [42.4, 45.3]],
+      "nota": 8,
+      "selo": "MJ Music",
+      "gancho": "O sertanejo encontrou o funk",
+      "broll": [
+        {"imagem": "livinho_foto_05.jpg", "de": 13.0, "ate": 16.5}
+      ],
+      "titulo": "O sertanejo encontrou o funk: MC Livinho na MJ Music",
+      "descricao": "Do sertanejo ao funk: o Rafael Cabral trouxe o MC Livinho para a MJ Music. Vem muita novidade por aí.",
+      "motivo": "Contraste sertanejo x funk gera curiosidade sem comparar artistas; final animado."
+    },
+    {
+      "id": "livinho_01_05",
+      "trechos": [[3.1, 12.0], [19.0, 23.2]],
+      "nota": 9,
+      "selo": "Fofoca",
+      "gancho": "Você viu o que o Rafael Cabral fez?",
+      "broll": [
+        {"imagem": "livinho_foto_03.jpg", "de": 0.0, "ate": 3.2},
+        {"imagem": "livinho_foto_02.jpg", "de": 3.2, "ate": 6.2},
+        {"imagem": "livinho_foto_06.jpg", "de": 6.2, "ate": 9.0}
+      ],
+      "textos": [
+        {"texto": "Assinou com o maior nome do funk", "de": 3.2, "ate": 6.2},
+        {"texto": "MC Livinho agora é MJ Music", "de": 6.2, "ate": 9.0}
+      ],
+      "titulo": "Você viu o que o Rafael Cabral fez? MC Livinho na MJ Music",
+      "descricao": "Rafael Cabral assinou com o MC Livinho e ninguém esperava. O próximo passo dele sempre surpreende.",
+      "motivo": "Formato fofoca/notícia com cartelas e fotos da assinatura; revelação no fim prende até o último segundo."
+    }
+  ]
+}

@@ -9,7 +9,9 @@
       "gancho": "O Balaio é outro nível",
       "titulo": "Disseram que a festa ia ser ruim… era o Balaio",
       "descricao": "Falaram que não iam porque era ruim. Chegaram no Balaio e não pararam mais de dançar.",
-      "motivo": "Vídeo curto de humor com música, alta chance de ser assistido mais de uma vez (replay). Sem fala, então não tem legenda palavra a palavra."
+      "motivo": "Vídeo curto de humor com música, alta chance de ser assistido mais de uma vez (replay). Sem fala, então não tem legenda palavra a palavra.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     }
   ]
 }

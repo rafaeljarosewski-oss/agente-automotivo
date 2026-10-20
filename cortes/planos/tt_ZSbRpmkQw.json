@@ -3,66 +3,191 @@
   "cortes": [
     {
       "id": "tt_ZSbRpmkQw_01",
-      "trechos": [[343.1, 350.1], [352.8, 358.9], [427.1, 432.1], [439.7, 441.3], [454.1, 459.9]],
+      "trechos": [
+        [
+          343.1,
+          350.1
+        ],
+        [
+          352.8,
+          358.9
+        ],
+        [
+          427.1,
+          432.1
+        ],
+        [
+          439.7,
+          441.3
+        ],
+        [
+          454.1,
+          459.9
+        ]
+      ],
       "nota": 10,
       "gancho": "Foi ele que achou o hit 50 Reais",
       "titulo": "Foi o Rafael Cabral que encontrou o hit 50 Reais",
       "descricao": "Thiago Brava conta como o Rafael Cabral fez um trabalho com estrutura zero e foi quem encontrou o fenômeno 50 Reais.",
-      "motivo": "Prova social forte: um artista conhecido atribui um hit nacional ao faro do Rafael. Máxima autoridade."
+      "motivo": "Prova social forte: um artista conhecido atribui um hit nacional ao faro do Rafael. Máxima autoridade.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_02",
-      "trechos": [[252.7, 264.9], [269.9, 288.6], [296.4, 297.6], [298.8, 306.1]],
+      "trechos": [
+        [
+          252.7,
+          264.9
+        ],
+        [
+          269.9,
+          288.6
+        ],
+        [
+          296.4,
+          297.6
+        ],
+        [
+          298.8,
+          306.1
+        ]
+      ],
       "nota": 10,
       "gancho": "Ele viu em mim o que nem eu via",
       "titulo": "\"Faça 10% do que você faz por ele\": o convite que mudou a carreira do Rafael Cabral",
       "descricao": "Em 2015 o Thiago Brava convidou o Rafael Cabral para cuidar da carreira dele em Goiânia. O Rafael conta o que ouviu naquele dia.",
-      "motivo": "História de origem e gratidão, com frase memorável no final. Mostra trajetória e reconhecimento."
+      "motivo": "História de origem e gratidão, com frase memorável no final. Mostra trajetória e reconhecimento.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_03",
-      "trechos": [[568.4, 576.2], [579.4, 598.8], [599.9, 601.1]],
+      "trechos": [
+        [
+          568.4,
+          576.2
+        ],
+        [
+          579.4,
+          598.8
+        ],
+        [
+          599.9,
+          601.1
+        ]
+      ],
       "nota": 9,
       "gancho": "A gravadora queria soltar outra música",
       "titulo": "A gravadora queria soltar outra música. Ele bateu o pé.",
       "descricao": "Rafael Cabral conta como ouviu a música três vezes seguidas na casa do Panda e insistiu para ela ser o lançamento.",
-      "motivo": "Bastidor com tensão e desfecho positivo; mostra o faro do Rafael para hits."
+      "motivo": "Bastidor com tensão e desfecho positivo; mostra o faro do Rafael para hits.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_04",
-      "trechos": [[380.4, 381.5], [382.6, 386.0], [395.5, 398.1], [401.0, 408.4]],
+      "trechos": [
+        [
+          380.4,
+          381.5
+        ],
+        [
+          382.6,
+          386.0
+        ],
+        [
+          395.5,
+          398.1
+        ],
+        [
+          401.0,
+          408.4
+        ]
+      ],
       "nota": 8,
       "gancho": "Quase 2 milhões em um carnaval",
       "titulo": "Quase 2 milhões em um carnaval com o Rafael Cabral",
       "descricao": "Thiago Brava relembra o primeiro carnaval depois que o Rafael Cabral assumiu a carreira dele: a meta era um milhão e meio.",
-      "motivo": "Número forte no gancho e resultado concreto do trabalho do Rafael como empresário."
+      "motivo": "Número forte no gancho e resultado concreto do trabalho do Rafael como empresário.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_05",
-      "trechos": [[462.4, 468.2], [478.2, 487.4], [488.1, 501.3]],
+      "trechos": [
+        [
+          462.4,
+          468.2
+        ],
+        [
+          478.2,
+          487.4
+        ],
+        [
+          488.1,
+          501.3
+        ]
+      ],
       "nota": 7,
       "gancho": "Achar um hit hoje é outro jogo",
       "titulo": "Por que fazer um hit hoje é muito mais difícil",
       "descricao": "Antes as músicas duravam dois, três anos. Hoje é difícil achar a música certa e mais difícil ainda fazer ela dar certo.",
-      "motivo": "Conteúdo de mercado com opinião do Rafael; gera comentário de quem acompanha a música."
+      "motivo": "Conteúdo de mercado com opinião do Rafael; gera comentário de quem acompanha a música.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_06",
-      "trechos": [[0.0, 3.4], [12.1, 22.0], [33.5, 40.8], [43.9, 47.3]],
+      "trechos": [
+        [
+          0.0,
+          3.4
+        ],
+        [
+          12.1,
+          22.0
+        ],
+        [
+          33.5,
+          40.8
+        ],
+        [
+          43.9,
+          47.3
+        ]
+      ],
       "nota": 6,
       "gancho": "Visita surpresa ao meio-dia",
       "titulo": "Rafael Cabral chega de surpresa na casa do Thiago Brava",
       "descricao": "Meio-dia, o Thiago ainda dormindo e o Rafael chegando com a câmera ligada para desvendar a estrutura do vizinho.",
-      "motivo": "Bastidor leve e bem-humorado, mostra a amizade e o lifestyle; bom para replay."
+      "motivo": "Bastidor leve e bem-humorado, mostra a amizade e o lifestyle; bom para replay.",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     },
     {
       "id": "tt_ZSbRpmkQw_07",
-      "trechos": [[166.4, 176.7], [178.6, 181.9], [182.8, 193.6]],
+      "trechos": [
+        [
+          166.4,
+          176.7
+        ],
+        [
+          178.6,
+          181.9
+        ],
+        [
+          182.8,
+          193.6
+        ]
+      ],
       "nota": 6,
       "gancho": "Vizinhos e amigos de longa data",
       "titulo": "A rua \"Era Cabral\": os planos dos vizinhos Rafael Cabral e Thiago Brava",
       "descricao": "Vizinhos que quase nunca se encontram porque vivem viajando, e já têm até nome para a rua.",
-      "motivo": "Humor leve e amizade, reforça a marca \"Era Cabral\"."
+      "motivo": "Humor leve e amizade, reforça a marca \"Era Cabral\".",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     }
   ]
 }

@@ -3,12 +3,27 @@
   "cortes": [
     {
       "id": "drive_pasta_01_01",
-      "trechos": [[62.8, 87.1], [102.0, 120.0], [126.5, 134.0]],
+      "trechos": [
+        [
+          62.8,
+          87.1
+        ],
+        [
+          102.0,
+          120.0
+        ],
+        [
+          126.5,
+          134.0
+        ]
+      ],
       "nota": 8,
       "gancho": "Ninguém fez isso ainda no Balaio",
       "titulo": "O novo Balaio que ninguém viu ainda",
       "descricao": "Os bastidores da próxima versão do Balaio: a resenha antes da música e a ideia que ainda ninguém fez.",
-      "motivo": "Bastidor exclusivo do projeto, empolgação genuína e promessa de novidade (curiosidade)."
+      "motivo": "Bastidor exclusivo do projeto, empolgação genuína e promessa de novidade (curiosidade).",
+      "descartado": true,
+      "motivo_descarte": "Direcionamento de 20/10: só MC Livinho e Priscila Carolynne; Thiago e Balaio proibidos."
     }
   ]
 }

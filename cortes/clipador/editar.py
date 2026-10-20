@@ -137,7 +137,8 @@ def _quebrar(texto: str, max_chars: int) -> str:
     return r"\N".join(linhas)
 
 
-def _ass(gancho: str, rotulo: str, duracao: float, ws_mapeadas: list[dict]) -> str:
+def _ass(gancho: str, rotulo: str, duracao: float, ws_mapeadas: list[dict],
+         selo: str = "", textos: list[dict] | None = None) -> str:
     cab = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {LARGURA}
@@ -150,6 +151,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 Style: Legenda,Anton,118,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,1,0,1,7,4,5,60,60,0,1
 Style: Gancho,Anton,96,&H00101010,&H00FFFFFF,&H0000D4FF,&H00000000,0,0,0,0,100,100,1,0,3,22,0,8,70,70,250,1
 Style: Rotulo,Anton,48,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,3,0,1,3,2,8,60,60,120,1
+Style: Selo,Anton,58,&H00FFFFFF,&H00FFFFFF,&H002A1FE0,&H00000000,0,0,0,0,100,100,4,0,3,14,0,8,70,70,120,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -162,8 +164,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             f"Dialogue: 2,{_ts(0)},{_ts(fim_gancho)},Gancho,,0,0,0,,"
             r"{\fscx70\fscy70\t(0,120,\fscx104\fscy104)\t(120,200,\fscx100\fscy100)\fad(0,180)}" + txt
         )
+    if selo:  # tarja vermelha de notícia ("URGENTE", "EXCLUSIVO") junto com o gancho
+        ev.append(f"Dialogue: 3,{_ts(0)},{_ts(fim_gancho)},Selo,,0,0,0,,{{\\fad(0,180)}}{selo.upper()}")
+    # cartelas de texto ao longo do vídeo (estilo notícia), tempos no vídeo final
+    for t in textos or []:
+        txt = _quebrar(t["texto"].upper(), 16)
+        ev.append(f"Dialogue: 2,{_ts(t['de'])},{_ts(min(t['ate'], duracao))},Gancho,,0,0,0,,"
+                  r"{\fscx80\fscy80\t(0,110,\fscx100\fscy100)\fad(0,150)}" + txt)
     if rotulo:
-        ev.append(f"Dialogue: 1,{_ts(fim_gancho)},{_ts(duracao)},Rotulo,,0,0,0,,{{\\fad(250,0)}}{rotulo.upper()}")
+        ocupado = [(0.0, fim_gancho if gancho else 0.0)] + [(t["de"], t["ate"]) for t in textos or []]
+        livre_desde = 0.0
+        for a, z in sorted(ocupado) + [(duracao, duracao)]:
+            if a - livre_desde > 0.5:
+                ev.append(f"Dialogue: 1,{_ts(livre_desde)},{_ts(a)},Rotulo,,0,0,0,,{{\\fad(250,0)}}{rotulo.upper()}")
+            livre_desde = max(livre_desde, z)
 
     # agrupa em blocos de até 3 palavras / 18 caracteres, quebrando nas pausas e pontuação
     blocos: list[list[dict]] = []
@@ -233,7 +247,8 @@ def renderizar(video: Path, transcricao: list[dict], corte: dict, saida: Path,
 
     TEMP.mkdir(parents=True, exist_ok=True)
     ass = TEMP / f"{corte['id']}.ass"
-    ass.write_text(_ass(corte.get("gancho", ""), rotulo, duracao, ws_map), encoding="utf-8")
+    ass.write_text(_ass(corte.get("gancho", ""), rotulo, duracao, ws_map,
+                        selo=corte.get("selo", ""), textos=corte.get("textos")), encoding="utf-8")
 
     # O vídeo de entrada começa em `ini` (seek na entrada), então os tempos ficam relativos.
     n = len(tomadas)
@@ -271,8 +286,26 @@ def renderizar(video: Path, transcricao: list[dict], corte: dict, saida: Path,
     silencio = "".join(f",volume=enable='between(t,{a:.2f},{z:.2f})':volume=0" for a, z in mudos)
     partes.append(f"[acr]anull{silencio}[ac]")
 
+    # fotos de apoio (B-roll) por cima do vídeo, com zoom lento; tempos no vídeo final
+    entradas_extra: list[str] = []
+    prox_entrada = 2 if musica else 1
+    atual = "vc"
+    for k, b in enumerate(corte.get("broll") or []):
+        de, ate = float(b["de"]), min(float(b["ate"]), duracao)
+        img = video.parent / b["imagem"]
+        entradas_extra += ["-loop", "1", "-framerate", str(FPS), "-t", f"{ate - de + 0.1:.3f}", "-i", str(img)]
+        sw, sh = int(LARGURA * 1.1) // 2 * 2, int(ALTURA * 1.1) // 2 * 2
+        partes.append(
+            f"[{prox_entrada}:v]scale={sw}:{sh}:force_original_aspect_ratio=increase,crop={sw}:{sh},"
+            f"zoompan=z='1+0.0012*on':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={LARGURA}x{ALTURA}:fps={FPS},"
+            f"setsar=1,format=yuv420p,setpts=PTS-STARTPTS+{de:.3f}/TB[br{k}]"
+        )
+        partes.append(f"[{atual}][br{k}]overlay=enable='between(t,{de:.3f},{ate:.3f})':eof_action=pass[vb{k}]")
+        atual = f"vb{k}"
+        prox_entrada += 1
+
     fontes = _esc_filtro(FONTES_TTF)
-    partes.append(f"[vc]ass='{_esc_filtro(ass)}':fontsdir='{fontes}'[vl]")
+    partes.append(f"[{atual}]ass='{_esc_filtro(ass)}':fontsdir='{fontes}'[vl]")
     partes.append(f"color=c=0xFFD400:s={LARGURA}x12:r={FPS}[barra]")
     partes.append(f"[vl][barra]overlay=x='-w+w*t/{duracao:.3f}':y=H-h:shortest=1,format=yuv420p[vout]")
 
@@ -287,6 +320,7 @@ def renderizar(video: Path, transcricao: list[dict], corte: dict, saida: Path,
     else:
         partes.append("[ac]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[aout]")
 
+    entradas += entradas_extra
     saida.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
         "ffmpeg", "-v", "error", "-y", *entradas,

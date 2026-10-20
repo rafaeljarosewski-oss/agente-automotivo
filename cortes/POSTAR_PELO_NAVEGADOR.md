@@ -115,9 +115,9 @@ e, para cada um, usando o arquivo <id>.mp4 desta pasta, poste pelo meu navegador
    arquivo. Título e descrição exatamente como no roteiro. Público-alvo: "Não, não é conteúdo
    para crianças". Avance até Visibilidade e marque Pública → Publicar.
 2. TikTok (tiktok.com/upload): selecione o arquivo, legenda exatamente como no roteiro (começa
-   com @rafael_cabral4), "Quem pode ver": Todos, comentários permitidos → Publicar.
+   com @rafael_cabral.mj), "Quem pode ver": Todos, comentários permitidos → Publicar.
 3. Instagram (instagram.com → Criar → Post): selecione o arquivo, mantenha 9:16, legenda
-   exatamente como no roteiro (começa com @rafael_cabral) → Compartilhar.
+   exatamente como no roteiro (começa com @rafael_cabral @mclivao @priscilacarolynneofc) → Compartilhar.
 
 Regras: a marcação (@) tem que ser a primeira coisa da legenda; não mude hashtags; não oculte
 curtidas.
